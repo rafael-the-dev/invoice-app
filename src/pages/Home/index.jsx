@@ -1,8 +1,10 @@
-import { Typography } from '@material-ui/core';
+import Header from '../../components/Header';
 
 const Home = () => {
     return (
-        <Typography component="h1" variant="h2">Hello World</Typography>
+        <>
+            <Header />
+        </>
     );
 };
 
