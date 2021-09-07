@@ -5,11 +5,19 @@ import classNames from 'classnames';
 import { useClasses } from './styles';
 import { Avatar, Button, Grid, Paper } from '@material-ui/core';
 import { useBackground, useDisplay } from '../../styles';
+import { useRef } from 'react';
 
 const Header = () => {
     const classes = useClasses();
     const bg = useBackground();
     const display = useDisplay();
+
+    const buttonRef = useRef(null);
+
+    const onClickHandler = () => {
+        const className = classes.headerToggleButtonMoonIcon;
+        buttonRef.current.classList.toggle(className)
+    };
 
     return (
         <Grid container component="header" className={classNames(classes.header)}>
@@ -23,6 +31,8 @@ const Header = () => {
             <Grid item component={Paper} xs={9} elevation={0} 
                 className={classNames(display.flex, display.alignCenter, display.justifyEnd, bg.transparent)}>
                 <Button 
+                    onClick={onClickHandler}
+                    ref={buttonRef}
                     className={classNames(classes.headerToggleButton, bg.center, bg.contain, bg.noRepeat)} 
                     aria-label="toggle app theme"></Button>
                 <Avatar alt="Remy Sharp" src={avatarImage} />

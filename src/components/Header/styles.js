@@ -31,5 +31,8 @@ export const useClasses = makeStyles(theme => ({
         backgroundImage: `url(${sunIcon})`,
         height: 25,
         width: 20
+    },
+    headerToggleButtonMoonIcon: {
+        backgroundImage: `url(${moonIcon})`
     }
 }));
