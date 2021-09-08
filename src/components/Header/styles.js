@@ -5,14 +5,23 @@ import moonIcon from '../../assets/images/icon-moon.svg'
 export const useClasses = makeStyles(theme => ({
     header: {
         backgroundColor: '#373B53',
-        paddingRight: '5%'
+        paddingRight: '5%',
+        [theme.breakpoints.up('md')]: {
+            flexDirection: 'column !important',
+            height: '100%',
+            maxWidth: '6% !important',
+            paddingRight: 0
+        }
     },
     headerLogoContainer: {
         backgroundColor: '#7C5DFA',
         borderRadius: '0 20px 20px 0',
         height: 70,
         position: 'relative',
-        width: '80px !important'
+        width: '80px',
+        [theme.breakpoints.up('md')]: {
+            width: '100%'
+        }
     },
     headerLogo: {
         height: 30,
@@ -28,12 +37,18 @@ export const useClasses = makeStyles(theme => ({
         height: 35
     },
     headerToggleContainer: {
-        flexGrow: 1
+        flexGrow: 1,
+        [theme.breakpoints.up('md')]: {
+            paddingBottom: '1rem'
+        }
     },
     headerToggleButton: {
         backgroundImage: `url(${sunIcon})`,
         height: 25,
-        width: 20
+        width: 20,
+        [theme.breakpoints.up('md')]: {
+            marginBottom: '30%'
+        }
     },
     headerToggleButtonMoonIcon: {
         backgroundImage: `url(${moonIcon})`

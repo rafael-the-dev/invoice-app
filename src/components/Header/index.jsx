@@ -3,14 +3,15 @@ import avatarImage from '../../assets/images/image-avatar.jpg';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { useClasses } from './styles';
-import { Avatar, Button, Container, Paper } from '@material-ui/core';
-import { useBackground, useDisplay } from '../../styles';
+import { Avatar, Button, Grid, Paper } from '@material-ui/core';
+import { useBackground, useDisplay, useResponsive } from '../../styles';
 import { useRef } from 'react';
 
 const Header = () => {
     const classes = useClasses();
     const bg = useBackground();
     const display = useDisplay();
+    const responsive = useResponsive();
 
     const buttonRef = useRef(null);
 
@@ -20,7 +21,7 @@ const Header = () => {
     };
 
     return (
-        <Container maxWidth={false} disableGutters component="header" className={classNames(display.flex, 
+        <Grid item xs={12} md={1}  component="header" className={classNames(display.flex, 
             display.alignCenter, classes.header)}>
             <Paper elevation={0} className={classNames(display.flex, display.flexColumn, display.alignCenter, 
                 classes.headerLogoContainer, display.justifyEnd)}>
@@ -30,7 +31,7 @@ const Header = () => {
                 </Link>
             </Paper>
             <Paper elevation={0} className={classNames(display.flex, display.alignCenter, display.justifyEnd, 
-                bg.transparent, classes.headerToggleContainer)}>
+                bg.transparent, classes.headerToggleContainer, responsive.mdColumn)}>
                 <Button 
                     onClick={onClickHandler}
                     ref={buttonRef}
@@ -38,7 +39,7 @@ const Header = () => {
                     aria-label="toggle app theme"></Button>
                 <Avatar alt="Remy Sharp" src={avatarImage} />
             </Paper>
-        </Container>
+        </Grid>
     );
 };
 
