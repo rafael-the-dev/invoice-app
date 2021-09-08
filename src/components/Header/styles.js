@@ -27,6 +27,9 @@ export const useClasses = makeStyles(theme => ({
         borderRadius: '20px 0 20px 0',
         height: 35
     },
+    headerToggleContainer: {
+        flexGrow: 1
+    },
     headerToggleButton: {
         backgroundImage: `url(${sunIcon})`,
         height: 25,
