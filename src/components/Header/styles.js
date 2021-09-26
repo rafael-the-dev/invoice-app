@@ -8,7 +8,6 @@ export const useClasses = makeStyles(theme => ({
         paddingRight: '5%',
         [theme.breakpoints.up('md')]: {
             flexDirection: 'column !important',
-            height: '100%',
             maxWidth: '6% !important',
             paddingRight: 0
         }

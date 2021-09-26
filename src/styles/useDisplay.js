@@ -16,6 +16,9 @@ export const useDisplay = makeStyles(theme => ({
     h100: {
         height: '100%'
     },
+    justifyBetween: {
+        justifyContent: 'space-between'
+    },
     justifyCenter: {
         justifyContent: 'center'
     },

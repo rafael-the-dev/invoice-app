@@ -5,6 +5,8 @@ import DefaultButton from '../../components/Button';
 import { useBackground, useDisplay, useResponsive } from '../../styles';
 import { useClasses } from './styles';
 import { useState } from 'react';
+import data from '../../data.json';
+import ReportCard from '../../components/ReportCard';
 
 const Home = () => {
     const display = useDisplay();
@@ -50,7 +52,7 @@ const Home = () => {
                                 aria-describedby={popoverId}
                                 aria-haspopup="true" 
                                 onClick={handleClick}>
-                                Open Menu
+                                Filter by status
                             </Button>
                             <Popover
                                 id={popoverId}
@@ -83,12 +85,22 @@ const Home = () => {
                             </Popover>
                         </div>
                         <DefaultButton 
-                            label="New" 
                             className={classNames(classes.newInvoiceButton)}
                             startIcon={<span className={classNames(bg.noRepeat, bg.center, 
                             classes.startIcon)} ></span> } 
-                        />
+                        >
+                            <>New <Hidden only="xs">Invoices</Hidden></>
+                        </DefaultButton>
                     </Grid>
+                </Grid>
+                <Grid item container className={classNames(classes.cardsWrapper)}>
+                    {
+                        data.map((item, index) => (
+                            <Grid item xs={12} key={index} className={classNames(classes.cardContainer)}>
+                                <ReportCard report={item} />
+                            </Grid>
+                        ))
+                    }
                 </Grid>
             </Grid>
         </Grid>

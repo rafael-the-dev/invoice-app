@@ -3,6 +3,7 @@ import Iconplus from '../../assets/images/icon-plus.svg'
 
 export const useClasses = makeStyles(theme => ({
     baseContainer: {
+        boxSizing: 'border-box',
         [theme.breakpoints.up('md')]: {
             height: '100vh'
         }
@@ -10,8 +11,7 @@ export const useClasses = makeStyles(theme => ({
     main: {
         padding: '1.2rem 5% 4rem 5%',
         [theme.breakpoints.up('md')]: {
-            paddingBottom: 0,
-            paddingTop: '5rem'
+            padding: '5rem 15% 0 15%'
         }
     },
     startIcon: {
@@ -36,5 +36,11 @@ export const useClasses = makeStyles(theme => ({
     newInvoiceButton: {
         height: 43,
         padding: '.3rem .9rem .3rem .5rem !important'
+    },
+    cardsWrapper: {
+        marginTop: '2.3rem'
+    },
+    cardContainer: {
+        marginBottom: '1.3rem'
     }
 }));

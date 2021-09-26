@@ -2,7 +2,7 @@ import { useClasses } from "./styles";
 import classNames from 'classnames';
 import { useDisplay } from "../../styles";
 
-const DefaultButton = ({ label, clickHandler, startIcon, className }) => {
+const DefaultButton = ({ label, clickHandler, startIcon, children, className }) => {
     const classes = useClasses();
     const display = useDisplay();
 
@@ -10,7 +10,7 @@ const DefaultButton = ({ label, clickHandler, startIcon, className }) => {
         <button 
             className={classNames(display.flex, display.alignCenter, classes.defaultButton, className)}
             onClick={clickHandler}>
-            {startIcon}{ label }
+            { startIcon }{ label }{ children }
         </button>
     );
 };
