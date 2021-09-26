@@ -37,8 +37,11 @@ export const useClasses = makeStyles(theme => ({
         height: 43,
         padding: '.3rem .9rem .3rem .5rem !important'
     },
+    wrapper: {
+        marginTop: '2.3rem',
+        minHeight: '85%'
+    },
     cardsWrapper: {
-        marginTop: '2.3rem'
     },
     cardContainer: {
         marginBottom: '1.3rem'
