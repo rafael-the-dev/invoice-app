@@ -8,10 +8,11 @@ export const useClasses = makeStyles(theme => ({
         paddingRight: '5%',
         [theme.breakpoints.up('md')]: {
             flexDirection: 'column !important',
-            maxWidth: '6% !important',
-            paddingRight: 0
+            paddingRight: 0,
+            width: 'auto'
         }
     },
+    
     headerLogoContainer: {
         backgroundColor: '#7C5DFA',
         borderRadius: '0 20px 20px 0',

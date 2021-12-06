@@ -20,5 +20,10 @@ export const useResponsive = makeStyles(theme => ({
         [theme.breakpoints.up('md')]: {
             flexDirection: 'column !important'
         }
+    },
+    mdRow: {
+        [theme.breakpoints.up('md')]: {
+            flexDirection: 'row !important'
+        }
     }
 }))

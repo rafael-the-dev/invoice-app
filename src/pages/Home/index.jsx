@@ -51,9 +51,9 @@ const Home = () => {
     const handleClose = () => setAnchorEl(null);
 
     return (
-        <Grid container className={classNames(classes.baseContainer)}>
+        <main className={classNames(classes.baseContainer, display.flex, display.flexColumn, responsive.mdRow)}>
             <Header />
-            <Grid item container xs={12} md={11} component="main" 
+            <Grid container component="main" 
                 className={classNames(classes.main, responsive.mdAlignStart)}>
                 <Grid item container alignItems="center" component="section" xs={12}>
                     <Grid item component={Paper} elevation={0} xs={3} sm={4} md={4}>
@@ -124,7 +124,7 @@ const Home = () => {
                     </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+        </main>
     );
 };
 

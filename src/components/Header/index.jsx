@@ -21,7 +21,7 @@ const Header = () => {
     };
 
     return (
-        <Grid item xs={12} md={1}  component="header" className={classNames(display.flex, 
+        <header className={classNames(display.flex, 
             display.alignCenter, classes.header)}>
             <Paper elevation={0} className={classNames(display.flex, display.flexColumn, display.alignCenter, 
                 classes.headerLogoContainer, display.justifyEnd)}>
@@ -39,7 +39,7 @@ const Header = () => {
                     aria-label="toggle app theme"></Button>
                 <Avatar alt="Remy Sharp" src={avatarImage} />
             </Paper>
-        </Grid>
+        </header>
     );
 };
 

@@ -11,6 +11,8 @@ export const useClasses = makeStyles(theme => ({
     main: {
         padding: '1.2rem 5% 4rem 5%',
         [theme.breakpoints.up('md')]: {
+            maxHeight: '100vh',
+            overflow: 'auto',
             padding: '5rem 15% 0 15%'
         }
     },
