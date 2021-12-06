@@ -61,20 +61,21 @@ const Home = () => {
             <Grid container component="main" 
                 className={classNames(classes.main, responsive.mdAlignStart, theme.mainBg)}>
                 <Grid item container alignItems="center" component="section" xs={12}>
-                    <Grid item component={Paper} elevation={0} xs={3} sm={4} md={4}>
-                        <Typography component="h1" variant="h6" className={classNames(text.font7)}>
+                    <Grid item component={Paper} elevation={0} xs={3} sm={4} md={4} className={classNames(bg.transparent)}>
+                        <Typography component="h1" variant="h6" className={classNames(text.font7, theme.darkWhiteText)}>
                             Invoices
                         </Typography>
-                        <Typography component="p" variant="body2" className={classNames()}>
+                        <Typography component="p" variant="body2" className={classNames(display.opacity8, theme.darkWhiteText)}>
                             <Hidden xsDown>There are</Hidden> 7 <Hidden only="xs">total</Hidden> invoices
                         </Typography>
                     </Grid>
                     <Grid item component={Paper} elevation={0} xs={9} sm={8} md={8} className={classNames(display.flex, 
-                        display.alignCenter, display.justifyEnd)}>
+                        display.alignCenter, display.justifyEnd, bg.transparent)}>
                         <div className={classNames(classes.popoverContainer)}>
                             <Button 
                                 aria-describedby={popoverId}
                                 aria-haspopup="true" 
+                                className={classNames(theme.darkWhiteText)}
                                 onClick={handleClick}>
                                 Filter<Hidden xsDown> by status</Hidden>
                             </Button>

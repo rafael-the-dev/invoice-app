@@ -57,7 +57,8 @@ const ReportCard = ({ report }) => {
                     <Paper elevation={0} className={classNames(display.flex, display.alignCenter, bg.transparent, display.justifyBetween,
                         display.w100)}>
                         <Typography component="h2" variant="body2" className={classNames(text.font7)}>
-                            <span className={classNames(classes.lightGareyText)}>#</span>{ report.id }
+                            <span className={classNames(classes.lightGareyText)}>#</span>
+                            <span className={classNames(theme.darkWhiteText)}>{ report.id }</span>
                         </Typography>
                         <Typography  component="p" variant="body2" className={classNames(classes.lightGareyText)}>
                             Due { report.paymentDue }
@@ -65,7 +66,7 @@ const ReportCard = ({ report }) => {
                         <Typography component="p" variant="body2" className={classNames(classes.lightGareyText)}>
                             { report.clientName }
                         </Typography>
-                        <Typography  component="p" variant="h6" className={classNames(text.font7, classes.cardPrice)}>
+                        <Typography  component="p" variant="h6" className={classNames(text.font7, classes.cardPrice, theme.darkWhiteText)}>
                             £{ report.total }
                         </Typography>
                         <Button className={classNames(buttons.current[report.status.toLowerCase()], classes.button)}>
