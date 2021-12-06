@@ -1,15 +1,21 @@
 import { Button, Card, CardContent, Hidden, Paper, Typography } from '@material-ui/core';
 import { useStyles } from './styles';
-import { useDisplay, useTypography, useResponsive } from '../../styles';
+import { useBackground, useDisplay, useTypography, useResponsive } from '../../styles';
 import classNames from 'classnames';
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
+import { ThemeContext } from '../../context/ThemeContext'
+import { useTheme } from '../../theme/styles'
 
 const ReportCard = ({ report }) => {
     const classes = useStyles();
     const display = useDisplay();
     const text = useTypography();
     const responsive = useResponsive();
+    const bg = useBackground();
     const status = report.status.toLowerCase();
+
+    const { isLightTheme } = useContext(ThemeContext);
+    const theme = useTheme(isLightTheme);
 
     const buttons = useRef({
         paid: classes.cardPaidButton,
@@ -18,12 +24,12 @@ const ReportCard = ({ report }) => {
     })
 
     return (
-        <Card>
+        <Card className={classNames(theme.componentBg)}>
             <CardContent className={classNames(classes.cardContent, responsive.smRow)}>
                 <Hidden smUp>
                     <Paper
                         elevation={0} 
-                        className={classNames(display.flex, display.alignCenter, display.justifyBetween)}>
+                        className={classNames(display.flex, display.alignCenter, display.justifyBetween, bg.transparent)}>
                         <Typography component="h2" variant="body2" className={classNames(text.font7)}>
                             <span className={classNames(classes.lightGareyText)}>#</span>{ report.id }
                         </Typography>
@@ -31,10 +37,10 @@ const ReportCard = ({ report }) => {
                             <Typography component="p" variant="body2" className={classNames(classes.lightGareyText)}>{ report.clientName }</Typography>
                         </Hidden>
                     </Paper>
-                    <Paper elevation={0} className={classNames(display.flex, display.justifyBetween, classes.cardSubContent)}>
+                    <Paper elevation={0} className={classNames(display.flex, display.justifyBetween, bg.transparent, classes.cardSubContent)}>
                         <Paper 
                             elevation={0} 
-                            className={classNames(display.flex, display.flexColumn, responsive.smRow, responsive.smAlignCenter)}>
+                            className={classNames(display.flex, display.flexColumn, responsive.smRow, bg.transparent, responsive.smAlignCenter)}>
                             <Typography  component="p" variant="body2" className={classNames(classes.lightGareyText)}>
                                 { report.paymentDue }
                             </Typography>
@@ -48,7 +54,7 @@ const ReportCard = ({ report }) => {
                     </Paper>
                 </Hidden>
                 <Hidden xsDown>
-                    <Paper elevation={0} className={classNames(display.flex, display.alignCenter, display.justifyBetween,
+                    <Paper elevation={0} className={classNames(display.flex, display.alignCenter, bg.transparent, display.justifyBetween,
                         display.w100)}>
                         <Typography component="h2" variant="body2" className={classNames(text.font7)}>
                             <span className={classNames(classes.lightGareyText)}>#</span>{ report.id }

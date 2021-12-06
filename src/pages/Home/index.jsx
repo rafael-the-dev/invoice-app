@@ -4,10 +4,12 @@ import classNames from 'classnames';
 import DefaultButton from '../../components/Button';
 import { useBackground, useDisplay, useResponsive, useTypography } from '../../styles';
 import { useClasses } from './styles';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import data from '../../data.json';
 import ReportCard from '../../components/ReportCard';
 import { useCallback } from 'react';
+import { ThemeContext } from '../../context/ThemeContext'
+import { useTheme } from '../../theme/styles'
 
 const Home = () => {
     const display = useDisplay();
@@ -15,6 +17,9 @@ const Home = () => {
     const bg = useBackground();
     const responsive = useResponsive();
     const text = useTypography();
+
+    const { isLightTheme } = useContext(ThemeContext);
+    const theme = useTheme(isLightTheme);
 
     const [ anchorEl, setAnchorEl ] = useState(false);
     const [ state, setState ] = useState({
@@ -51,10 +56,10 @@ const Home = () => {
     const handleClose = () => setAnchorEl(null);
 
     return (
-        <main className={classNames(classes.baseContainer, display.flex, display.flexColumn, responsive.mdRow)}>
+        <div className={classNames(classes.baseContainer, display.flex, display.flexColumn, responsive.mdRow)}>
             <Header />
             <Grid container component="main" 
-                className={classNames(classes.main, responsive.mdAlignStart)}>
+                className={classNames(classes.main, responsive.mdAlignStart, theme.mainBg)}>
                 <Grid item container alignItems="center" component="section" xs={12}>
                     <Grid item component={Paper} elevation={0} xs={3} sm={4} md={4}>
                         <Typography component="h1" variant="h6" className={classNames(text.font7)}>
@@ -124,7 +129,7 @@ const Home = () => {
                     </Grid>
                 </Grid>
             </Grid>
-        </main>
+        </div>
     );
 };
 

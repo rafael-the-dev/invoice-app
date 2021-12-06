@@ -11,6 +11,6 @@ export const useBackground = makeStyles(theme => ({
         backgroundRepeat: 'no-repeat'
     },
     transparent: {
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent !important'
     }
 }));

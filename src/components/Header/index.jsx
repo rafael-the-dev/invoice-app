@@ -3,9 +3,11 @@ import avatarImage from '../../assets/images/image-avatar.jpg';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { useClasses } from './styles';
-import { Avatar, Button, Grid, Paper } from '@material-ui/core';
+import { Avatar, Button, Paper } from '@material-ui/core';
 import { useBackground, useDisplay, useResponsive } from '../../styles';
 import { useRef } from 'react';
+import { useContext } from 'react';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const Header = () => {
     const classes = useClasses();
@@ -14,10 +16,12 @@ const Header = () => {
     const responsive = useResponsive();
 
     const buttonRef = useRef(null);
+    const { toggleTheme } = useContext(ThemeContext);
 
     const onClickHandler = () => {
         const className = classes.headerToggleButtonMoonIcon;
-        buttonRef.current.classList.toggle(className)
+        buttonRef.current.classList.toggle(className);
+        toggleTheme();
     };
 
     return (
