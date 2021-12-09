@@ -14,8 +14,8 @@ const ReportCard = ({ report }) => {
     const bg = useBackground();
     const status = report.status.toLowerCase();
 
-    const { isLightTheme } = useContext(ThemeContext);
-    const theme = useTheme(isLightTheme);
+    const { theme } = useContext(ThemeContext);
+    const themeStyles = useTheme(theme);
 
     const buttons = useRef({
         paid: classes.cardPaidButton,
@@ -58,7 +58,7 @@ const ReportCard = ({ report }) => {
                         display.w100)}>
                         <Typography component="h2" variant="body2" className={classNames(text.font7)}>
                             <span className={classNames(classes.lightGareyText)}>#</span>
-                            <span className={classNames(theme.darkWhiteText)}>{ report.id }</span>
+                            <span className={classNames(themeStyles.darkWhiteText)}>{ report.id }</span>
                         </Typography>
                         <Typography  component="p" variant="body2" className={classNames(classes.lightGareyText)}>
                             Due { report.paymentDue }
@@ -66,7 +66,7 @@ const ReportCard = ({ report }) => {
                         <Typography component="p" variant="body2" className={classNames(classes.lightGareyText)}>
                             { report.clientName }
                         </Typography>
-                        <Typography  component="p" variant="h6" className={classNames(text.font7, classes.cardPrice, theme.darkWhiteText)}>
+                        <Typography  component="p" variant="h6" className={classNames(text.font7, classes.cardPrice, themeStyles.darkWhiteText)}>
                             £{ report.total }
                         </Typography>
                         <Button className={classNames(buttons.current[report.status.toLowerCase()], classes.button)}>

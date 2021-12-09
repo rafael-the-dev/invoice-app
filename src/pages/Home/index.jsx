@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import DefaultButton from '../../components/Button';
 import { useBackground, useDisplay, useResponsive, useTypography } from '../../styles';
 import { useClasses } from './styles';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import data from '../../data.json';
 import ReportCard from '../../components/ReportCard';
 import { useCallback } from 'react';
@@ -18,8 +18,8 @@ const Home = () => {
     const responsive = useResponsive();
     const text = useTypography();
 
-    const { isLightTheme } = useContext(ThemeContext);
-    const theme = useTheme(isLightTheme);
+    const { theme } = useContext(ThemeContext);
+    const themeStyles = useTheme(theme);
 
     const [ anchorEl, setAnchorEl ] = useState(false);
     const [ state, setState ] = useState({
@@ -28,6 +28,9 @@ const Home = () => {
         paid: false,
     });
    // const [ invoicesList, setInvoiceList ] = useState([]);
+   useEffect(() => {
+       console.log(themeStyles.mainBg, theme);
+   }, [theme, themeStyles]);
 
     const getFilteredInvoices = useCallback(() => {
         let filter = []; 
@@ -59,13 +62,13 @@ const Home = () => {
         <div className={classNames(classes.baseContainer, display.flex, display.flexColumn, responsive.mdRow)}>
             <Header />
             <Grid container component="main" 
-                className={classNames(classes.main, responsive.mdAlignStart, theme.mainBg)}>
+                className={classNames(classes.main, responsive.mdAlignStart, themeStyles.mainBg)}>
                 <Grid item container alignItems="center" component="section" xs={12}>
                     <Grid item component={Paper} elevation={0} xs={3} sm={4} md={4} className={classNames(bg.transparent)}>
-                        <Typography component="h1" variant="h6" className={classNames(text.font7, theme.darkWhiteText)}>
+                        <Typography component="h1" variant="h6" className={classNames(text.font7, themeStyles.darkWhiteText)}>
                             Invoices
                         </Typography>
-                        <Typography component="p" variant="body2" className={classNames(display.opacity8, theme.darkWhiteText)}>
+                        <Typography component="p" variant="body2" className={classNames(display.opacity8, themeStyles.darkWhiteText)}>
                             <Hidden xsDown>There are</Hidden> 7 <Hidden only="xs">total</Hidden> invoices
                         </Typography>
                     </Grid>
@@ -75,7 +78,7 @@ const Home = () => {
                             <Button 
                                 aria-describedby={popoverId}
                                 aria-haspopup="true" 
-                                className={classNames(theme.darkWhiteText)}
+                                className={classNames(themeStyles.darkWhiteText)}
                                 onClick={handleClick}>
                                 Filter<Hidden xsDown> by status</Hidden>
                             </Button>

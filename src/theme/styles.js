@@ -1,16 +1,16 @@
 import { makeStyles } from "@material-ui/core";
 import { colors } from '../styles/colors'
 
-const { dark1, dark2, darkBlue, grey, light } = colors;
+const { dark1, dark2, darkBlue, grey, light, lightBg } = colors;
 
 export const useTheme = makeStyles(theme => ({
     componentBg: {
-        backgroundColor: props => `${props.isLight ? light : darkBlue } !important`,
+        backgroundColor: props => `${props.isLightTheme ? light : darkBlue } !important`,
     },
     darkWhiteText: {
-        color: props => `${props.isLight ? dark2 : light } !important`,
+        color: props => `${props.isLightTheme ? dark2 : light } !important`,
     },
     mainBg: {
-        backgroundColor: props => `${props.isLight ? grey : dark1 } !important`,
+        backgroundColor: props => `${props.isLightTheme ? lightBg : dark1 } !important`,
     }
 }));

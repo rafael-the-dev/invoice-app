@@ -4,11 +4,11 @@ export const ThemeContext = createContext();
 ThemeContext.displayName = 'ThemeContext';
 
 export const ThemeContextProvider = ({ children }) => {
-    const [ isLightTheme, setIsLightTheme ] = useState(true);
+    const [ theme, setTheme ] = useState({ isLightTheme: true });
 
-    const toggleTheme = useCallback(() => setIsLightTheme(theme => !theme), []);
+    const toggleTheme = useCallback(() => setTheme(theme => ({ ...theme, isLightTheme: !theme.isLightTheme})), []);
 
     return (
-        <ThemeContext.Provider value={{ isLightTheme, toggleTheme }}>{ children }</ThemeContext.Provider>
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>{ children }</ThemeContext.Provider>
     );
 }
