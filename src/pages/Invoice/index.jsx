@@ -27,7 +27,39 @@ const Invoice = () => {
                         <Typography className={classNames(text.font7, classes.peddingStatus, classes.status)}>Pending</Typography>
                     </div>
                 </Paper>
-
+                <Paper className={classNames(display.pl1, display.pr1, display.pt1, display.pb2)}>
+                    <div className={classNames(display.flex, display.justifyBetween, display.flexColumn)}>
+                        <Typography className={classNames(display.mb2)}>
+                            <span className={classNames(classes.textLightPurple)}>#</span>
+                            <spna className={classNames(text.font7)}>XM9141</spna><br />
+                            <span className={classNames(classes.textLightPurple)}>Graphic Design</span>
+                        </Typography>
+                        <Typography className={classNames(classes.textLightPurple)}>
+                            19 Union Terrace Lon<br/>E1 3EZ<br/>United Kingdom
+                        </Typography>
+                    </div>
+                    <div className={classNames(display.flex, display.flexColumn, display.mt3)}>
+                        <div className={classNames(display.flex, display.mt3)}>
+                            <div>
+                                <Typography gutterBottom className={classNames(classes.textLightPurple)}>Invoice Date</Typography>
+                                <Typography className={classNames(display.mb1, text.font7)}>21 Aug 2021</Typography>
+                                <Typography gutterBottom className={classNames(classes.textLightPurple)}>Payment Due</Typography>
+                                <Typography className={classNames(display.mb1, text.font7)}>20 Sep 2021</Typography>
+                            </div>
+                            <div className={classNames(display.ml2)}>
+                                <Typography gutterBottom className={classNames(classes.textLightPurple)}>Bill To</Typography>
+                                <Typography gutterBottom className={classNames(text.font7)}>Alex Grim</Typography>
+                                <Typography className={classNames(display.mb1, classes.textLightPurple)}>
+                                    84 Church Way<br/>Bradford<br/>BD1 9PB<br/>United Kingdom
+                                </Typography>
+                            </div>
+                        </div>
+                        <div className={classNames(display.ml)}>
+                            <Typography gutterBottom className={classNames(classes.textLightPurple)}>Sent to</Typography>
+                            <Typography gutterBottom className={classNames(text.font7)}>alexgrim@mail.com</Typography>
+                        </div>
+                    </div>
+                </Paper>
             </main>
         </div>
     );
