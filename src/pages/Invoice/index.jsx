@@ -18,7 +18,7 @@ const Invoice = () => {
             <main
                 className={classNames(classes.main, responsive.mdAlignStart)}>
                 <div className={classNames(display.pb2)} >
-                    <Button startIcon={<ArrowBackIosIcon />}>Go back</Button>
+                    <Button startIcon={<ArrowBackIosIcon className={classNames(classes.textLightPurple)} />}>Go back</Button>
                 </div>
                 <Paper className={classNames(display.mb2, display.pl1, display.pr1, display.pb1, display.pt1)}>
                     <div className={classNames(display.flex, display.justifyBetween, display.alignCenter, 
@@ -58,6 +58,29 @@ const Invoice = () => {
                             <Typography gutterBottom className={classNames(classes.textLightPurple)}>Sent to</Typography>
                             <Typography gutterBottom className={classNames(text.font7)}>alexgrim@mail.com</Typography>
                         </div>
+                    </div>
+                    <div className={classNames(display.mt3, classes.checkout, display.pt1, display.pb1, display.pl1,
+                        display.pr1)}>
+                        <div className={classNames(display.flex, display.alignCenter, display.justifyBetween,
+                            display.mb1)}>
+                            <Typography className={classNames()}>
+                                <spna className={classNames(text.font7)}>Banner Design</spna><br />
+                                <span className={classNames(classes.textLightPurple)}>1 x £ 156.00</span>
+                            </Typography>
+                            <Typography className={classNames(text.font7)}>£ 156.00</Typography>
+                        </div>
+                        <div className={classNames(display.flex, display.alignCenter, display.justifyBetween)}>
+                            <Typography className={classNames()}>
+                                <spna className={classNames(text.font7)}>Email Design</spna><br />
+                                <span className={classNames(classes.textLightPurple)}>2 x £ 200.00</span>
+                            </Typography>
+                            <Typography className={classNames(text.font7)}>£ 400.00</Typography>
+                        </div>
+                    </div>
+                    <div className={classNames(display.flex, display.alignCenter, display.justifyBetween, display.pl1,
+                        display.pr1, display.pb2, display.pt2, classes.checkoutTotalBanner)}>
+                        <Typography className={classNames(text.textLight, display.opacity7)}>Grand Total</Typography>
+                        <Typography className={classNames(text.font7, text.textLight)}>£ 556.00</Typography>
                     </div>
                 </Paper>
             </main>
