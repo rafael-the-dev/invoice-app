@@ -12,9 +12,18 @@ export const useStyles = makeStyles(theme => ({
     textLightPurple: {
         color: '#858BB2'
     },
+    statusContainer: {
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            width: 'auto'
+        }
+    },
     status: {
         borderRadius: 5,
-        padding: '0.45rem 0.9rem'
+        padding: '0.45rem 0.9rem',
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: '1rem'
+        }
     },
     peddingStatus: {
         backgroundColor: '#ff8f0021',
@@ -27,5 +36,19 @@ export const useStyles = makeStyles(theme => ({
     checkoutTotalBanner: {
         backgroundColor: '#373B53',
         borderRadius: '0 0 8px 8px'
+    },
+    buttonPill: {
+        borderRadius: '24px !important',
+        padding: '.5rem .7rem !important'
+    },
+    editButton: {
+        backgroundColor: '#F9FAFE !important',
+        color: '#7E88C3 !important'
+    },
+    deleteButton: {
+        backgroundColor: '#EC5757 !important'
+    },
+    saveButton: {
+        backgroundColor: '#7C5DFA !important',
     }
 }));
