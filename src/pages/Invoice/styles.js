@@ -1,12 +1,19 @@
 import { makeStyles } from "@material-ui/core";
 
 export const useStyles = makeStyles(theme => ({
+    baseContainer: {
+        boxSizing: 'border-box',
+        [theme.breakpoints.up('md')]: {
+            height: '100vh'
+        }
+    },
     main: {
         backgroundColor: '#F2F2F2',
         padding: '1.2rem 5% 4rem 5%',
         [theme.breakpoints.up('md')]: {
-            //overflow: 'auto',
-           // padding: '5rem 15% 0 15%'
+            maxHeight: '100vh',
+            overflow: 'auto',
+            padding: '5rem 15% 2rem 15%'
         }
     },
     textLightPurple: {
