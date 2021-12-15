@@ -5,6 +5,7 @@ import { useBackground, useDisplay, useResponsive, useTypography } from '../../s
 import Header from '../../components/Header';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const Invoice = () => {
     const display = useDisplay();
@@ -12,6 +13,8 @@ const Invoice = () => {
     const bg = useBackground();
     const responsive = useResponsive();
     const text = useTypography();
+
+    const history = useHistory();
 
     const buttonsMemo = useMemo(() => (
         <>
@@ -38,7 +41,11 @@ const Invoice = () => {
             <main
                 className={classNames(classes.main, responsive.mdAlignStart, display.flexGrow1)}>
                 <div className={classNames(display.pb2)} >
-                    <Button startIcon={<ArrowBackIosIcon className={classNames(classes.textLightPurple)} />}>Go back</Button>
+                    <Button 
+                        onClick={() => history.push('/')}
+                        startIcon={<ArrowBackIosIcon className={classNames(classes.textLightPurple)} />}>
+                        Go back
+                    </Button>
                 </div>
                 <Paper className={classNames(display.mb2, display.pl1, display.pr1, display.pb1, display.pt1, display.flex, 
                     display.alignCenter, display.justifyBetween)}>
