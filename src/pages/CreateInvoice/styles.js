@@ -7,9 +7,11 @@ export const useStyles = makeStyles(theme => ({
             top: '70px !important'
         },
         [theme.breakpoints.up('md')]: {
-            top: '30px !important',
+            left: '65px !important',
+            top: '0 !important',
             '& .MuiBackdrop-root': {
-                top: '62px !important'
+                left: '65px !important',
+                top: '0 !important'
             }
         }
     },
@@ -26,7 +28,7 @@ export const useStyles = makeStyles(theme => ({
             width: 560
         },
         [theme.breakpoints.up('md')]: {
-            //margin: '32px 6% !important',
+            width: 640
         }
     },
     textPurple: {
