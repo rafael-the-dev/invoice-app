@@ -15,7 +15,7 @@ const CreateInvoice = () => {
     const responsive = useResponsive();
     const text = useTypography();
 
-    const { closeCreateInvoice, openCreateInvoice } = useContext(AppContext);
+    const { closeCreateInvoice, isCreateNewInvoiceDialog, openCreateInvoice } = useContext(AppContext);
     const [paymentTerm, setPaymentTerm] = useState('Net 30 Day');
 
     const paymentsTerms = [
@@ -47,7 +47,7 @@ const CreateInvoice = () => {
             aria-labelledby="dialog-title" 
             classes={{ root: classes.dialogRoot, scrollPaper: classNames(display.alignStart, responsive.smJustifyStart), paper: classes.dialogPaper}} 
             open={openCreateInvoice}>
-            <DialogTitle id="dialog-title">New Invoice</DialogTitle>
+            <DialogTitle id="dialog-title">{ isCreateNewInvoiceDialog ? 'New Invoice' : 'Edit #XM9141' }</DialogTitle>
             <DialogContent>
                 <form className={classNames(display.flex, display.flexColumn, display.alignStretch)}>
                     <fieldset className={classNames(display.flex, display.flexColumn, display.alignStretch)}>
@@ -119,7 +119,7 @@ const CreateInvoice = () => {
                             <input 
                                 id="client-email" 
                                 type="email"
-                                placeholder="Client's Email"
+                                placeholder="e.g. email@example.com"
                                 className={classNames(classes.defaultInput)} 
                             />
                         </div>

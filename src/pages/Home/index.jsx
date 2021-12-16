@@ -117,7 +117,7 @@ const Home = () => {
                             </Popover>
                         </div>
                         <DefaultButton 
-                            clickHandler={displayCreateInvoice}
+                            clickHandler={displayCreateInvoice(true)}
                             className={classNames(classes.newInvoiceButton)}
                             startIcon={<span className={classNames(bg.noRepeat, bg.center, 
                             classes.startIcon)} ></span> } 
