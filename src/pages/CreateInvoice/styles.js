@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 export const useStyles = makeStyles(theme => ({
     dialogRoot: {
-        top: '39px !important',
+        top: '72px !important',
         '& .MuiBackdrop-root': {
             top: '70px !important'
         },
@@ -14,7 +14,9 @@ export const useStyles = makeStyles(theme => ({
         }
     },
     dialogPaper: {
-        margin: '32px 0 !important',
+        margin: '0 !important',
+        height: '100%',
+        maxHeight: '100% !important',
         width: '100%',
         [theme.breakpoints.up('sm')]: {
             width: 390
