@@ -10,6 +10,8 @@ import ReportCard from '../../components/ReportCard';
 import { useCallback } from 'react';
 import { ThemeContext } from '../../context/ThemeContext'
 import { useTheme } from '../../theme/styles'
+import { AppContext } from '../../context/AppContext';
+import CreateInvoice from '../CreateInvoice';
 
 const Home = () => {
     const display = useDisplay();
@@ -17,6 +19,8 @@ const Home = () => {
     const bg = useBackground();
     const responsive = useResponsive();
     const text = useTypography();
+
+    const { displayCreateInvoice, openCreateInvoice } = useContext(AppContext);
 
     const { theme } = useContext(ThemeContext);
     const themeStyles = useTheme(theme);
@@ -113,6 +117,7 @@ const Home = () => {
                             </Popover>
                         </div>
                         <DefaultButton 
+                            clickHandler={displayCreateInvoice}
                             className={classNames(classes.newInvoiceButton)}
                             startIcon={<span className={classNames(bg.noRepeat, bg.center, 
                             classes.startIcon)} ></span> } 
@@ -133,6 +138,7 @@ const Home = () => {
                     </Grid>
                 </Grid>
             </Grid>
+            { openCreateInvoice && <CreateInvoice />}
         </div>
     );
 };
