@@ -46,6 +46,11 @@ export const useResponsive = makeStyles(theme => ({
             justifyContent: 'flex-end !important'
         }
     },
+    smJustifyStart: {
+        [theme.breakpoints.up('sm')]: {
+            justifyContent: 'flex-start !important'
+        }
+    },
     smJustifyBetween: {
         [theme.breakpoints.up('sm')]: {
             justifyContent: 'space-between !important'

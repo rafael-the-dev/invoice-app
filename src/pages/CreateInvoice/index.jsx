@@ -19,7 +19,7 @@ const CreateInvoice = () => {
         <Dialog 
             onClose={closeCreateInvoice} 
             aria-labelledby="dialog-title" 
-            classes={{ root: classes.dialogRoot, scrollPaper: classNames(display.alignStart), paper: classes.dialogPaper}} 
+            classes={{ root: classes.dialogRoot, scrollPaper: classNames(display.alignStart, responsive.smJustifyStart), paper: classes.dialogPaper}} 
             open={openCreateInvoice}>
             <DialogTitle id="dialog-title">New Invoice</DialogTitle>
             <DialogContent>

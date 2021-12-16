@@ -19,10 +19,14 @@ export const useStyles = makeStyles(theme => ({
         maxHeight: '100% !important',
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            width: 390
+            maxWidth: '100% !important',
+            width: 490
+        },
+        [theme.breakpoints.up(800)]: {
+            width: 560
         },
         [theme.breakpoints.up('md')]: {
-            margin: '32px 6% !important',
+            //margin: '32px 6% !important',
         }
     },
     textPurple: {
