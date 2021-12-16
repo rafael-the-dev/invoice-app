@@ -52,5 +52,14 @@ export const useStyles = makeStyles(theme => ({
         [theme.breakpoints.up('sm')]: {
             marginLeft: '5%' 
         }
+    },
+    paymnetTerm: {
+        border: '1px solid #DFE3FA',
+        marginTop: 10,
+    },
+    paymnetTermRoot: {
+        '& fieldset': {
+            borderColor: 'transparent !important'
+        }
     }
 }));

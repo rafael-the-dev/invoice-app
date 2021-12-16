@@ -4,7 +4,9 @@ import classNames from 'classnames';
 import { useBackground, useDisplay, useResponsive, useTypography } from '../../styles';
 import { useContext } from 'react'
 import { AppContext } from '../../context/AppContext';
-
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
+import { useState } from 'react';
 
 const CreateInvoice = () => {
     const display = useDisplay();
@@ -13,7 +15,31 @@ const CreateInvoice = () => {
     const responsive = useResponsive();
     const text = useTypography();
 
-    const { closeCreateInvoice, displayCreateInvoice, openCreateInvoice } = useContext(AppContext);
+    const { closeCreateInvoice, openCreateInvoice } = useContext(AppContext);
+    const [paymentTerm, setPaymentTerm] = useState('Net 30 Day');
+
+    const paymentsTerms = [
+        {
+          value: 'Net 1 Day',
+          label: 'Net 1 Day',
+        },
+        {
+          value: 'Net 7 Day',
+          label: 'Net 7 Day',
+        },
+        {
+          value: 'Net 14 Day',
+          label: 'Net 14 Day',
+        },
+        {
+          value: 'Net 30 Day',
+          label: 'Net 30 Day',
+        },
+    ];
+
+    const handleChange = (event) => {
+        setPaymentTerm(event.target.value);
+      };
 
     return (
         <Dialog 
@@ -147,6 +173,51 @@ const CreateInvoice = () => {
                             </Grid>
                         </Grid>
                     </fieldset>
+                    <Grid container className={classNames(display.mt1)}>
+                        <Grid item xs={12} sm={6}>
+                            <div className={classNames(display.flex, display.flexColumn, classes.cityContainer)}>
+                                <label 
+                                    className={classNames(classes.defaultLabel, classes.textPurple)} 
+                                    htmlFor='invoice-date'>Invoice Date</label>
+                                <input 
+                                    id="invoice-date" 
+                                    type="date"
+                                    placeholder='date'
+                                    className={classNames(classes.defaultInput)} 
+                                />
+                            </div>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <div className={classNames(display.flex, display.flexColumn, classes.countryContainer,
+                                display.mt1)}>
+                                <label 
+                                    className={classNames(classes.defaultLabel, classes.textPurple)} 
+                                    htmlFor='payment-term'>
+                                    Payment Terms
+                                </label>
+                                <TextField
+                                    id="payment-term"
+                                    select
+                                    label=""
+                                    fullWidth
+                                    value={paymentTerm}
+                                    onChange={handleChange}
+                                    variant="outlined"
+                                    helperText=""
+                                    classes={{ root: classes.paymnetTermRoot}}
+                                    className={classNames(classes.paymnetTerm, classes.countryContainer)}
+                                    >
+                                    {
+                                        paymentsTerms.map((option) => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                            </MenuItem>
+                                        ))
+                                    }
+                                </TextField>
+                            </div>
+                        </Grid>
+                    </Grid>
                 </form>
             </DialogContent>
         </Dialog>
