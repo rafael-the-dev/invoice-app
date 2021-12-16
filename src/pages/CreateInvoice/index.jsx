@@ -217,6 +217,19 @@ const CreateInvoice = () => {
                                 </TextField>
                             </div>
                         </Grid>
+                        <Grid item xs={12}>
+                            <div className={classNames(display.flex, display.flexColumn, display.mt1, display.mb2)}>
+                                <label 
+                                    className={classNames(classes.defaultLabel, classes.textPurple)} 
+                                    htmlFor='project-description'>Project Description</label>
+                                <textarea
+                                    id="project-description" 
+                                    rows="1"
+                                    placeholder='e.g. Graphic Design Service'
+                                    className={classNames(classes.defaultInput)} 
+                                ></textarea>
+                            </div>
+                        </Grid>
                     </Grid>
                 </form>
             </DialogContent>

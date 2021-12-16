@@ -19,6 +19,7 @@ export const useStyles = makeStyles(theme => ({
         margin: '0 !important',
         height: '100%',
         maxHeight: '100% !important',
+        paddingBottom: 16,
         width: '100%',
         [theme.breakpoints.up('sm')]: {
             maxWidth: '100% !important',
