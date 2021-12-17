@@ -7,6 +7,7 @@ import { AppContext } from '../../context/AppContext';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useState } from 'react';
+import ItemCard from './ItemCard';
 
 const CreateInvoice = () => {
     const display = useDisplay();
@@ -233,6 +234,12 @@ const CreateInvoice = () => {
                             </div>
                         </Grid>
                     </Grid>
+                    <fieldset className={classNames(classes.px)}>
+                        <legend className={classNames(text.font7, classes.textPurple)} >Item List</legend>
+                        <Grid container className={classNames(display.mt1)}>
+                            <ItemCard />
+                        </Grid>
+                    </fieldset>
                     <div className={classNames(display.mt1, classes.gradientContainer)}></div>
                     { isCreateNewInvoiceDialog ? (
                         <Paper elevation={0} className={classNames(display.pt1, classes.px, display.pb1, display.flex, display.alignCenter, display.justifyEnd)}>
