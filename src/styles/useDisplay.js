@@ -158,6 +158,9 @@ export const useDisplay = makeStyles(theme => ({
     pb3: {
         paddingBottom: '3rem !important'
     },
+    pl0: {
+        paddingLeft: '0rem !important'
+    },
     pl1: {
         paddingLeft: '1rem !important'
     },
@@ -166,6 +169,9 @@ export const useDisplay = makeStyles(theme => ({
     },
     pl3: {
         paddingLeft: '3rem !important'
+    },
+    pr0: {
+        paddingRight: '0rem !important'
     },
     pr1: {
         paddingRight: '1rem !important'

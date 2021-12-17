@@ -54,6 +54,11 @@ export const useStyles = makeStyles(theme => ({
             marginLeft: '5%' 
         }
     },
+    invoiceDateContainer: {
+        [theme.breakpoints.up('sm')]: {
+            marginRight: '5%' 
+        }
+    },
     paymnetTerm: {
         border: '1px solid #DFE3FA',
         marginTop: 10,
@@ -62,5 +67,19 @@ export const useStyles = makeStyles(theme => ({
         '& fieldset': {
             borderColor: 'transparent !important'
         }
+    },
+    buttonPill: {
+        borderRadius: '24px !important',
+        padding: '.5rem .7rem !important'
+    },
+    editButton: {
+        backgroundColor: '#F9FAFE !important',
+        color: '#7E88C3 !important'
+    },
+    saveAsDraft: {
+        backgroundColor: '#373B53 !important'
+    },
+    saveButton: {
+        backgroundColor: '#7C5DFA !important',
     }
 }));
