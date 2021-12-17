@@ -239,6 +239,10 @@ const CreateInvoice = () => {
                         <Grid container className={classNames(display.mt1)}>
                             <ItemCard />
                         </Grid>
+                        <Button className={classNames(classes.buttonPill, classes.editButton, display.mt2, 
+                            display.w100, text.font7)}>
+                            + Add New Item
+                        </Button>
                     </fieldset>
                     <div className={classNames(display.mt1, classes.gradientContainer)}></div>
                     { isCreateNewInvoiceDialog ? (
