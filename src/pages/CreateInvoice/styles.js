@@ -32,6 +32,10 @@ export const useStyles = makeStyles(theme => ({
             width: 640
         }
     },
+    px: {
+        paddingLeft: '5% !important',
+        paddingRight: '5% !important'
+    },
     textPurple: {
         color: '#7E88C3 !important'
     },
@@ -67,6 +71,10 @@ export const useStyles = makeStyles(theme => ({
         '& fieldset': {
             borderColor: 'transparent !important'
         }
+    },
+    gradientContainer: {
+        backgroundImage: 'linear-gradient(to bottom, rgb(229 229 229 / 9%), rgb(191 191 191 / 40%))',
+        height: 30
     },
     buttonPill: {
         borderRadius: '24px !important',

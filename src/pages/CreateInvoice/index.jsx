@@ -48,9 +48,10 @@ const CreateInvoice = () => {
             classes={{ root: classes.dialogRoot, scrollPaper: classNames(display.alignStart, responsive.smJustifyStart), paper: classes.dialogPaper}} 
             open={openCreateInvoice}>
             <DialogTitle id="dialog-title">{ isCreateNewInvoiceDialog ? 'New Invoice' : 'Edit #XM9141' }</DialogTitle>
-            <DialogContent>
+            <DialogContent className={classNames(display.pl0, display.pr0)}>
                 <form className={classNames(display.flex, display.flexColumn, display.alignStretch)}>
-                    <fieldset className={classNames(display.flex, display.flexColumn, display.alignStretch, display.pl0, display.pr0)}>
+                    <fieldset className={classNames(display.flex, display.flexColumn, display.alignStretch, 
+                        classes.px)}>
                         <legend className={classNames(text.font7, classes.textPurple)} >Bill From</legend>
                         <div className={classNames(display.flex, display.flexColumn, display.mt1)}>
                             <label className={classNames(classes.defaultLabel, classes.textPurple)} htmlFor='street-address'>Street Address</label>
@@ -101,7 +102,7 @@ const CreateInvoice = () => {
                         </Grid>
                     </fieldset>
                     <fieldset className={classNames(display.flex, display.flexColumn, display.alignStretch, 
-                        display.mt2, display.pl0, display.pr0)}>
+                        display.mt2, classes.px)}>
                         <legend className={classNames(text.font7, classes.textPurple)} >Bill To</legend>
                         <div className={classNames(display.flex, display.flexColumn, display.mt1)}>
                             <label 
@@ -174,7 +175,7 @@ const CreateInvoice = () => {
                             </Grid>
                         </Grid>
                     </fieldset>
-                    <Grid container className={classNames(display.mt1)}>
+                    <Grid container className={classNames(display.mt1, classes.px)}>
                         <Grid item xs={12} sm={6}>
                             <div className={classNames(display.flex, display.flexColumn, classes.invoiceDateContainer)}>
                                 <label 
@@ -232,17 +233,18 @@ const CreateInvoice = () => {
                             </div>
                         </Grid>
                     </Grid>
+                    <div className={classNames(display.mt1, classes.gradientContainer)}></div>
                     { isCreateNewInvoiceDialog ? (
-                        <div className={classNames(display.flex, display.alignCenter, display.justifyEnd)}>
+                        <Paper elevation={0} className={classNames(display.pt1, classes.px, display.pb1, display.flex, display.alignCenter, display.justifyEnd)}>
                             <Button className={classNames(classes.buttonPill, text.rem7, text.font7, classes.editButton)}>Edit</Button>
                             <Button className={classNames(classes.buttonPill, text.rem7, display.ml1, text.font7, text.textLight, classes.saveAsDraft)}>Delete</Button>
                             <Button className={classNames(classes.buttonPill, text.rem7, display.ml1, text.font7, text.textLight, classes.saveButton)}>Mark as paid</Button>
-                        </div>
+                        </Paper>
                     ) : (
-                        <div className={classNames(display.flex, display.alignCenter, display.justifyEnd)}>
+                        <Paper elevation={0} className={classNames(display.pt1, classes.px, display.pb1, display.flex, display.alignCenter, display.justifyEnd)}>
                             <Button className={classNames(classes.buttonPill, text.rem8, text.font7, classes.editButton)}>Edit</Button>
                             <Button className={classNames(classes.buttonPill, text.rem8, responsive.smMl1, text.font7, text.textLight, classes.saveButton)}>Delete</Button>
-                        </div>
+                        </Paper>
                     ) }
                 </form>
             </DialogContent>
