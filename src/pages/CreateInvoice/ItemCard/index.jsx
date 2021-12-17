@@ -13,7 +13,7 @@ const ItemCard = () => {
 
    return (
         <Grid item xs={12} className={classNames(display.flex, display.flexColumn, display.alignStretch)}>
-            <div className={classNames(display.flex, display.flexColumn, classes.invoiceDateContainer)}>
+            <div className={classNames(display.flex, display.flexColumn, classes.invoiceDateContainer, display.mt2)}>
                 <label 
                     className={classNames(classes.defaultLabel, classes.textPurple)} 
                     htmlFor='item-name-field'>Item Name</label>
@@ -23,7 +23,7 @@ const ItemCard = () => {
                     className={classNames(classes.defaultInput)} 
                 />
             </div>
-            <Grid container className={classNames(display.mt2)}>
+            <Grid container className={classNames(display.mt1)}>
                 <Grid item xs={3} sm={4}>
                     <div className={classNames(display.flex, display.flexColumn, classes.marginRight)}>
                         <label 

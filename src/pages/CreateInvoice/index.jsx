@@ -18,6 +18,7 @@ const CreateInvoice = () => {
 
     const { closeCreateInvoice, isCreateNewInvoiceDialog, openCreateInvoice } = useContext(AppContext);
     const [paymentTerm, setPaymentTerm] = useState('Net 30 Day');
+    const [ itemsList, setItemList ] = useState([ <ItemCard /> ]);
 
     const paymentsTerms = [
         {
@@ -40,7 +41,11 @@ const CreateInvoice = () => {
 
     const handleChange = (event) => {
         setPaymentTerm(event.target.value);
-      };
+    };
+
+    const addItemClickHandler = () => {
+        setItemList(list => [ ...list,  <ItemCard /> ])
+    }
 
     return (
         <Dialog 
@@ -236,10 +241,10 @@ const CreateInvoice = () => {
                     </Grid>
                     <fieldset className={classNames(classes.px)}>
                         <legend className={classNames(text.font7, classes.textPurple)} >Item List</legend>
-                        <Grid container className={classNames(display.mt1)}>
-                            <ItemCard />
+                        <Grid container className={classNames()}>
+                            { itemsList }
                         </Grid>
-                        <Button className={classNames(classes.buttonPill, classes.editButton, display.mt2, 
+                        <Button onClick={addItemClickHandler} className={classNames(classes.buttonPill, classes.editButton, display.mt2, 
                             display.w100, text.font7)}>
                             + Add New Item
                         </Button>
