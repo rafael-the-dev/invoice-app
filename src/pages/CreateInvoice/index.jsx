@@ -8,6 +8,8 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useState } from 'react';
 import ItemCard from './ItemCard';
+import { useEffect } from 'react';
+import nextId from "react-id-generator";
 
 const CreateInvoice = () => {
     const display = useDisplay();
@@ -18,7 +20,11 @@ const CreateInvoice = () => {
 
     const { closeCreateInvoice, isCreateNewInvoiceDialog, openCreateInvoice } = useContext(AppContext);
     const [paymentTerm, setPaymentTerm] = useState('Net 30 Day');
-    const [ itemsList, setItemList ] = useState([ <ItemCard /> ]);
+    const [ itemsList, setItemList ] = useState([ ]);
+
+    useEffect(() => setItemList(list => [
+        <ItemCard index={nextId()} setItemList={setItemList} />
+    ]), [])
 
     const paymentsTerms = [
         {
@@ -44,8 +50,8 @@ const CreateInvoice = () => {
     };
 
     const addItemClickHandler = () => {
-        setItemList(list => [ ...list,  <ItemCard /> ])
-    }
+        setItemList(list => [ ...list,  <ItemCard index={nextId()} setItemList={setItemList} /> ])
+    };
 
     return (
         <Dialog 
@@ -197,7 +203,7 @@ const CreateInvoice = () => {
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <div className={classNames(display.flex, display.flexColumn, classes.countryContainer,
-                                display.mt1)}>
+                                display.mt1, responsive.mdMt0)}>
                                 <label 
                                     className={classNames(classes.defaultLabel, classes.textPurple)} 
                                     htmlFor='payment-term'>

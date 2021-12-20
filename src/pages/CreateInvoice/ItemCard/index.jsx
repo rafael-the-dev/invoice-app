@@ -4,12 +4,18 @@ import classNames from 'classnames';
 import { Grid, IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-const ItemCard = () => {
+const ItemCard = ({ index, setItemList }) => {
     const display = useDisplay();
     const classes = useStyles();
     const bg = useBackground();
     const responsive = useResponsive();
     const text = useTypography();
+
+    console.log(index)
+
+    const deleteHandler = () => {
+        setItemList(list => list.filter((item) => item.props.index !== index))
+    }
 
    return (
         <Grid item xs={12} className={classNames(display.flex, display.flexColumn, display.alignStretch)}>
@@ -24,7 +30,7 @@ const ItemCard = () => {
                 />
             </div>
             <Grid container className={classNames(display.mt1)}>
-                <Grid item xs={3} sm={4}>
+                <Grid item xs={3}>
                     <div className={classNames(display.flex, display.flexColumn, classes.marginRight)}>
                         <label 
                             className={classNames(classes.defaultLabel, classes.textPurple)} 
@@ -36,7 +42,7 @@ const ItemCard = () => {
                         />
                     </div>
                 </Grid>
-                <Grid item xs={4} sm={4}>
+                <Grid item xs={4}>
                     <div className={classNames(display.flex, display.flexColumn, classes.marginRight)}>
                         <label 
                             className={classNames(classes.defaultLabel, classes.textPurple)} 
@@ -48,7 +54,7 @@ const ItemCard = () => {
                         />
                     </div>
                 </Grid>
-                <Grid item xs={3} sm={4}>
+                <Grid item xs={3}>
                     <div className={classNames(display.flex, display.flexColumn, classes.marginRight,
                         responsive.smMt0)}>
                         <label 
@@ -64,10 +70,10 @@ const ItemCard = () => {
                         />
                     </div>
                 </Grid>
-                <Grid item xs={2} sm={4} className={classNames(display.flex, display.alignCenter)}>
+                <Grid item xs={2} className={classNames(display.flex, display.alignCenter)}>
                     <div className={classNames(display.flex, display.flexColumn, classes.countryContainer,
                         responsive.smMt0)}>
-                        <IconButton>
+                        <IconButton onClick={deleteHandler}>
                             <DeleteIcon classes={{ root: classNames(classes.textPurple)}} />
                         </IconButton>
                     </div>
