@@ -1,14 +1,13 @@
 import { useStyles } from './styles'
-import { Button, Dialog, DialogContent, DialogTitle, FormGroup, Checkbox, Grid, Hidden, Paper, Popover, Typography } from '@material-ui/core';
+import { Button, Dialog, DialogContent, DialogTitle, Grid, Paper, } from '@material-ui/core';
 import classNames from 'classnames';
 import { useBackground, useDisplay, useResponsive, useTypography } from '../../styles';
-import { useContext } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useRef } from 'react'
 import { AppContext } from '../../context/AppContext';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useState } from 'react';
 import ItemCard from './ItemCard';
-import { useEffect } from 'react';
 import nextId from "react-id-generator";
 
 const CreateInvoice = () => {
@@ -21,10 +20,37 @@ const CreateInvoice = () => {
     const { closeCreateInvoice, isCreateNewInvoiceDialog, openCreateInvoice } = useContext(AppContext);
     const [paymentTerm, setPaymentTerm] = useState('Net 30 Day');
     const [ itemsList, setItemList ] = useState([ ]);
+    const [ productsList, setProductsList ] = useState({});
+    const nextProductID = useRef('');
+    const generateNewProduct = useRef(false);
 
-    useEffect(() => setItemList(list => [
-        <ItemCard index={nextId()} setItemList={setItemList} />
-    ]), [])
+    useEffect(() => {
+        const index = nextId();
+        nextProductID.current = index;
+        setProductsList(list => ({ ...list, [index]: { name: '', quantity: 0, price: 0, total: 0}}));
+    }, []);
+
+    useEffect(() => {
+        if(generateNewProduct.current) {
+            const index = nextId();
+            nextProductID.current = index;
+            setProductsList(list => {
+                const newlist = { ...list, [index]: { name: '', quantity: 0, price: 0, total: 0}};
+                console.log('new list', newlist, index);
+                return newlist;
+            });
+            generateNewProduct.current = false;
+        }
+    }, [ itemsList ]);
+    /*useEffect(() => {
+        const index = nextId();
+        setProductsList(list => {
+            return { ...list, [index]: { name: '', quantity: 0, price: 0, total: 0}};
+        });
+        setItemList(list => [
+            <ItemCard index={index} setItemList={setItemList} setProductsList={setProductsList} productsList={productsList} />
+        ])
+    }, [])*/
 
     const paymentsTerms = [
         {
@@ -49,9 +75,26 @@ const CreateInvoice = () => {
         setPaymentTerm(event.target.value);
     };
 
+    const nextItemCard = useCallback(() => {
+        return (
+            <ItemCard 
+                key={nextProductID.current} 
+                index={nextProductID.current} 
+                setItemList={setItemList} 
+                setProductsList={setProductsList} 
+                productsList={productsList} 
+            />
+        )
+    }, [ productsList ])
+
     const addItemClickHandler = () => {
-        setItemList(list => [ ...list,  <ItemCard index={nextId()} setItemList={setItemList} /> ])
+        //const index = nextId();
+        //setProductsList(list => ({ ...list, [index]: { name: '', quantity: 0, price: 0, total: 0}}));
+        setItemList(list => [ ...list,  nextItemCard() ]);
+        generateNewProduct.current = true;
     };
+
+    const itemListMemo = useMemo(() => itemsList, [ itemsList ]);
 
     return (
         <Dialog 
@@ -248,7 +291,7 @@ const CreateInvoice = () => {
                     <fieldset className={classNames(classes.px)}>
                         <legend className={classNames(text.font7, classes.textPurple)} >Item List</legend>
                         <Grid container className={classNames()}>
-                            { itemsList }
+                            { itemListMemo }
                         </Grid>
                         <Button onClick={addItemClickHandler} className={classNames(classes.buttonPill, classes.editButton, display.mt2, 
                             display.w100, text.font7)}>
