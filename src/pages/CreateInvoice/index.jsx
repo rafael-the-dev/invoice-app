@@ -94,6 +94,7 @@ const CreateInvoice = () => {
         //setProductsList(list => ({ ...list, [index]: { name: '', quantity: 0, price: 0, total: 0}}));
         setItemList(list => [ ...list,  nextItemCard() ]);
         generateNewProduct.current = true;
+        setHasItemsError(false);
     };
 
     const itemListMemo = useMemo(() => itemsList, [ itemsList ]);
@@ -154,7 +155,9 @@ const CreateInvoice = () => {
     const [ hasItemsError, setHasItemsError ] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
-        console.log(createInvoice(data));
+        if(getTotalPrice() === 0) {
+            console.log(createInvoice(data));
+        }
     }
     const saveHandler = event => {
         event.preventDefault();
@@ -364,7 +367,12 @@ const CreateInvoice = () => {
                         <Grid container className={classNames()}>
                             { itemListMemo }
                         </Grid>
-                        { hasItemsError && <div><Typography variant="h6" className={classNames(classes.errorText)}>No items added</Typography></div> }
+                        { hasItemsError && <div>
+                            <Typography variant="h6" className={classNames(classes.errorText)}>
+                                No items or Products details added 
+                            </Typography>
+                            </div> 
+                        }
                         <Button onClick={addItemClickHandler} className={classNames(classes.buttonPill, classes.editButton, display.mt2, 
                             display.w100, text.font7)}>
                             + Add New Item
