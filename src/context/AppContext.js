@@ -18,10 +18,12 @@ export const AppContextProvider = ({ children }) => {
 
     useEffect(() => {
         if(!Boolean(localStorage.getItem(localStoraInvoicesName.current))) {
-            localStorage.setItem(localStoraInvoicesName.current, JSON.stringify([]));
+            localStorage.setItem(localStoraInvoicesName.current, JSON.stringify([...data]));
             setInvoiceList([ ...data, ])
         } else {
-            setInvoiceList([ ...data, ...JSON.parse(localStorage.getItem(localStoraInvoicesName.current))])
+            const list = [ ...JSON.parse(localStorage.getItem(localStoraInvoicesName.current))];
+            setInvoiceList(list)
+            localStorage.setItem(localStoraInvoicesName.current, JSON.stringify(list));
         }
     }, [])
 
