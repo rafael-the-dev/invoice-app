@@ -1,6 +1,12 @@
 import { makeStyles } from "@material-ui/core";
 
 export const useStyles = makeStyles(theme => ({
+    card: {
+        '&:hover': {
+            border: '1px solid #7C5DFA',
+            cursor: 'pointer'
+        }
+    },
     cardContent: {
         paddingTop: '1.3rem'
     },

@@ -4,6 +4,7 @@ import { useBackground, useDisplay, useTypography, useResponsive } from '../../s
 import classNames from 'classnames';
 import { useContext, useRef } from 'react';
 import { ThemeContext } from '../../context/ThemeContext'
+import { AppContext } from '../../context/AppContext'
 import { useTheme } from '../../theme/styles'
 
 const ReportCard = ({ report }) => {
@@ -14,6 +15,7 @@ const ReportCard = ({ report }) => {
     const bg = useBackground();
     const status = report.status.toLowerCase();
 
+    const { displayCreateInvoice } = useContext(AppContext);
     const { theme } = useContext(ThemeContext);
     const themeStyles = useTheme(theme);
 
@@ -29,7 +31,7 @@ const ReportCard = ({ report }) => {
     }
 
     return (
-        <Card className={classNames(theme.componentBg)}>
+        <Card className={classNames(theme.componentBg, classes.card)} onClick={displayCreateInvoice(false)}>
             <CardContent className={classNames(classes.cardContent, responsive.smRow)}>
                 <Hidden smUp>
                     <Paper
