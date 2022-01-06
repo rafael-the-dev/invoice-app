@@ -89,5 +89,9 @@ export const useStyles = makeStyles(theme => ({
     },
     saveButton: {
         backgroundColor: '#7C5DFA !important',
+    },
+    error: {
+        border: '1px solid red !important',
+        color: 'red !important'
     }
 }));

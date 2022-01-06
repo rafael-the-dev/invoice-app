@@ -9,6 +9,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { useState } from 'react';
 import ItemCard from './ItemCard';
 import nextId from "react-id-generator";
+import { useForm } from "react-hook-form";
+import moment from 'moment';
 
 const CreateInvoice = () => {
     const display = useDisplay();
@@ -55,19 +57,19 @@ const CreateInvoice = () => {
     const paymentsTerms = [
         {
           value: 'Net 1 Day',
-          label: 'Net 1 Day',
+          label: '1',
         },
         {
           value: 'Net 7 Day',
-          label: 'Net 7 Day',
+          label: '7',
         },
         {
           value: 'Net 14 Day',
-          label: 'Net 14 Day',
+          label: '14',
         },
         {
           value: 'Net 30 Day',
-          label: 'Net 30 Day',
+          label: '30',
         },
     ];
 
@@ -109,7 +111,7 @@ const CreateInvoice = () => {
     const getRandomLetter = useCallback(() => {
         const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
             'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-        return letters[Math.floor(Math.random() * letters.length)];
+        return letters[Math.floor(Math.random() * letters.length)].toUpperCase();
     }, []);
 
     const getRandomNumber = useCallback(() => {
@@ -121,6 +123,37 @@ const CreateInvoice = () => {
     useEffect(() => {
         invoiceID.current = `${getRandomLetter()}${getRandomLetter()}${getRandomNumber()}${getRandomNumber()}${getRandomNumber()}${getRandomNumber()}`;
     }, [ getRandomLetter, getRandomNumber ]);
+
+    const createInvoice = useCallback((data) => {
+        return {
+            "id": invoiceID.current,
+            "createdAt": data['invoice-date'],
+            "paymentDue": moment(data['invoice-date']).add(data['payment-term'], 'days'),
+            "description": data['project-description'],
+            "paymentTerms": data['payment-term'],
+            "clientName": data['client-name'],
+            "clientEmail": data['client-email'],
+            "status": "pending",
+            "senderAddress": {
+              "street": data['street-address'],
+              "city": data['city'],
+              "postCode": data['post-code'],
+              "country": data['country']
+            },
+            "clientAddress": {
+              "street": data['client-street-address'],
+              "city": data['client-city'],
+              "postCode":data['client-post-code'],
+              "country": data['client-country']
+            },
+            "items": Object.values(productsList).filter(item => item.quantity > 0),
+            "total": getTotalPrice()
+        };
+    }, [ getTotalPrice, productsList ]);
+
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const onSubmit = data => console.log(createInvoice(data));
+    console.log(errors)
 
     return (
         <Dialog 
@@ -137,9 +170,9 @@ const CreateInvoice = () => {
                         <div className={classNames(display.flex, display.flexColumn, display.mt1)}>
                             <label className={classNames(classes.defaultLabel, classes.textPurple)} htmlFor='street-address'>Street Address</label>
                             <input 
-                                id="street-address" 
+                                {...register("street-address", { required: true })}
                                 placeholder='Street Address'
-                                className={classNames(classes.defaultInput)} 
+                                className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['street-address'])})} 
                             />
                         </div>
                         <Grid container className={classNames(display.mt1)}>
@@ -150,8 +183,9 @@ const CreateInvoice = () => {
                                         htmlFor='city'>City</label>
                                     <input 
                                         id="city" 
+                                        {...register("city", { required: true })}
                                         placeholder='City'
-                                        className={classNames(classes.defaultInput)} 
+                                        className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['city'])})} 
                                     />
                                 </div>
                             </Grid>
@@ -159,11 +193,11 @@ const CreateInvoice = () => {
                                 <div className={classNames(display.flex, display.flexColumn, classes.postCodeContainer)}>
                                     <label 
                                         className={classNames(classes.defaultLabel, classes.textPurple)} 
-                                        htmlFor='street-address'>Post Code</label>
+                                        htmlFor='post-code'>Post Code</label>
                                     <input 
-                                        id="post-code" 
+                                        {...register("post-code", { required: true })}
                                         placeholder='Post Code'
-                                        className={classNames(classes.defaultInput)} 
+                                        className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['post-code'])})} 
                                     />
                                 </div>
                             </Grid>
@@ -174,9 +208,9 @@ const CreateInvoice = () => {
                                         className={classNames(classes.defaultLabel, classes.textPurple)} 
                                         htmlFor='country'>Country</label>
                                     <input 
-                                        id="country" 
+                                        {...register("country", { required: true })}
                                         placeholder='Country'
-                                        className={classNames(classes.defaultInput)} 
+                                        className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['country'])})} 
                                     />
                                 </div>
                             </Grid>
@@ -190,9 +224,9 @@ const CreateInvoice = () => {
                                 className={classNames(classes.defaultLabel, classes.textPurple)} 
                                 htmlFor='client-name'>Client's Name</label>
                             <input 
-                                id="client-name" 
+                                {...register("client-name", { required: true })}
                                 placeholder="Client's Name"
-                                className={classNames(classes.defaultInput)} 
+                                className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['client-name'])})} 
                             />
                         </div>
                         <div className={classNames(display.flex, display.flexColumn, display.mt1)}>
@@ -200,10 +234,10 @@ const CreateInvoice = () => {
                                 className={classNames(classes.defaultLabel, classes.textPurple)} 
                                 htmlFor='client-email'>Client's Email</label>
                             <input 
-                                id="client-email" 
+                                {...register("client-email", { required: true })}
                                 type="email"
                                 placeholder="e.g. email@example.com"
-                                className={classNames(classes.defaultInput)} 
+                                className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['client-email'])})} 
                             />
                         </div>
                         <div className={classNames(display.flex, display.flexColumn, display.mt1)}>
@@ -211,9 +245,9 @@ const CreateInvoice = () => {
                                 className={classNames(classes.defaultLabel, classes.textPurple)} 
                                 htmlFor='client-street-address'>Street Address</label>
                             <input 
-                                id="client-street-address" 
+                                {...register("client-street-address", { required: true })}
                                 placeholder="Street Address"
-                                className={classNames(classes.defaultInput)} 
+                                className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['client-street-address'])})} 
                             />
                         </div>
                         <Grid container className={classNames(display.mt1)}>
@@ -223,9 +257,9 @@ const CreateInvoice = () => {
                                         className={classNames(classes.defaultLabel, classes.textPurple)} 
                                         htmlFor='client-city'>City</label>
                                     <input 
-                                        id="client-city" 
+                                        {...register("client-city", { required: true })}
                                         placeholder='City'
-                                        className={classNames(classes.defaultInput)} 
+                                        className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['client-city'])})} 
                                     />
                                 </div>
                             </Grid>
@@ -235,9 +269,9 @@ const CreateInvoice = () => {
                                         className={classNames(classes.defaultLabel, classes.textPurple)} 
                                         htmlFor='client-post-code'>Post Code</label>
                                     <input 
-                                        id="client-post-code" 
+                                        {...register("client-post-code", { required: true })}
                                         placeholder='Post Code'
-                                        className={classNames(classes.defaultInput)} 
+                                        className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['client-post-code'])})} 
                                     />
                                 </div>
                             </Grid>
@@ -248,9 +282,9 @@ const CreateInvoice = () => {
                                         className={classNames(classes.defaultLabel, classes.textPurple)} 
                                         htmlFor='client-country'>Country</label>
                                     <input 
-                                        id="client-country" 
+                                        {...register("client-country", { required: true })}
                                         placeholder='Country'
-                                        className={classNames(classes.defaultInput)} 
+                                        className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['client-country'])})} 
                                     />
                                 </div>
                             </Grid>
@@ -263,10 +297,10 @@ const CreateInvoice = () => {
                                     className={classNames(classes.defaultLabel, classes.textPurple)} 
                                     htmlFor='invoice-date'>Invoice Date</label>
                                 <input 
-                                    id="invoice-date" 
+                                    {...register("invoice-date", { required: true })}
                                     type="date"
                                     placeholder='date'
-                                    className={classNames(classes.defaultInput)} 
+                                    className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['invoice-date'])})} 
                                 />
                             </div>
                         </Grid>
@@ -279,7 +313,7 @@ const CreateInvoice = () => {
                                     Payment Terms
                                 </label>
                                 <TextField
-                                    id="payment-term"
+                                    {...register("payment-term", { required: true })}
                                     select
                                     label=""
                                     fullWidth
@@ -288,7 +322,7 @@ const CreateInvoice = () => {
                                     variant="outlined"
                                     helperText=""
                                     classes={{ root: classes.paymnetTermRoot}}
-                                    className={classNames(classes.paymnetTerm, classes.countryContainer)}
+                                    className={classNames(classes.paymnetTerm, classes.countryContainer, {[classes.error]: Boolean(errors['payment-term'])})}
                                     >
                                     {
                                         paymentsTerms.map((option) => (
@@ -306,10 +340,10 @@ const CreateInvoice = () => {
                                     className={classNames(classes.defaultLabel, classes.textPurple)} 
                                     htmlFor='project-description'>Project Description</label>
                                 <textarea
-                                    id="project-description" 
+                                    {...register("project-description", { required: true })}
                                     rows="1"
                                     placeholder='e.g. Graphic Design Service'
-                                    className={classNames(classes.defaultInput)} 
+                                    className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['project-description'])})} 
                                 ></textarea>
                             </div>
                         </Grid>
@@ -328,8 +362,15 @@ const CreateInvoice = () => {
                     { isCreateNewInvoiceDialog ? (
                         <Paper elevation={0} className={classNames(display.pt1, classes.px, display.pb1, display.flex, display.alignCenter, display.justifyEnd)}>
                             <Button className={classNames(classes.buttonPill, text.rem7, text.font7, classes.editButton)}>Edit</Button>
-                            <Button className={classNames(classes.buttonPill, text.rem7, display.ml1, text.font7, text.textLight, classes.saveAsDraft)}>Delete</Button>
-                            <Button className={classNames(classes.buttonPill, text.rem7, display.ml1, text.font7, text.textLight, classes.saveButton)}>Mark as paid</Button>
+                            <Button 
+                                className={classNames(classes.buttonPill, text.rem7, display.ml1, text.font7, text.textLight, classes.saveAsDraft)}
+                                >Save as Draft</Button>
+                            <Button 
+                                type="submit"
+                                className={classNames(classes.buttonPill, text.rem7, display.ml1, text.font7, text.textLight, classes.saveButton)}
+                                onClick={handleSubmit(onSubmit)}>
+                                Save &amp; Send
+                            </Button>
                         </Paper>
                     ) : (
                         <Paper elevation={0} className={classNames(display.pt1, classes.px, display.pb1, display.flex, display.alignCenter, display.justifyEnd)}>
