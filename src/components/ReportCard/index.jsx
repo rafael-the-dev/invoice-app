@@ -31,7 +31,7 @@ const ReportCard = ({ report }) => {
     }
 
     return (
-        <Card className={classNames(theme.componentBg, classes.card)} onClick={displayCreateInvoice(false)}>
+        <Card className={classNames(theme.componentBg, classes.card)} onClick={displayCreateInvoice(false, report)}>
             <CardContent className={classNames(classes.cardContent, responsive.smRow)}>
                 <Hidden smUp>
                     <Paper

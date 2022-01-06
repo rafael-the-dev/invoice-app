@@ -8,13 +8,17 @@ export const AppContextProvider = ({ children }) => {
     const [ openCreateInvoice, setOpenCreateInvoice ] = useState(false);
     const [ isCreateNewInvoiceDialog, setIsCreateNewInvoiceDialog ] = useState(false);
     const [ invoicesList, setInvoiceList ] = useState([]);
-    const localStoraInvoicesName = useRef('invoice-app__invoices')
+    const localStoraInvoicesName = useRef('invoice-app__invoices');
+    const selectedInvoice = useRef({});
 
     const closeCreateInvoice = useCallback(() => setOpenCreateInvoice(false), []);
-    const displayCreateInvoice = useCallback((state) => () => {
+    const displayCreateInvoice = useCallback((state, report) => () => {
         setIsCreateNewInvoiceDialog(state);
+        selectedInvoice.current = report;
         setOpenCreateInvoice(true);
     }, []);
+
+    const getSelectedInvoice = useCallback(() => selectedInvoice.current, []);
 
     useEffect(() => {
         if(!Boolean(localStorage.getItem(localStoraInvoicesName.current))) {
@@ -28,7 +32,7 @@ export const AppContextProvider = ({ children }) => {
     }, [])
 
     return (
-        <AppContext.Provider value={{ closeCreateInvoice, displayCreateInvoice, invoicesList, setInvoiceList, 
+        <AppContext.Provider value={{ closeCreateInvoice, displayCreateInvoice, getSelectedInvoice, invoicesList, setInvoiceList, 
             isCreateNewInvoiceDialog, localStoraInvoicesName, openCreateInvoice }}>{ children }</AppContext.Provider>
     );
 }

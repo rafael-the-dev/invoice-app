@@ -36,6 +36,12 @@ export const useStyles = makeStyles(theme => ({
         paddingLeft: '5% !important',
         paddingRight: '5% !important'
     },
+    dialogTitle: {
+        '& h2': {
+            color: '#0C0E16 !important',
+            fontWeight: 700
+        }
+    },
     textPurple: {
         color: '#7E88C3 !important'
     },

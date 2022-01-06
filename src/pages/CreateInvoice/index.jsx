@@ -20,7 +20,7 @@ const CreateInvoice = () => {
     const responsive = useResponsive();
     const text = useTypography();
 
-    const { closeCreateInvoice, isCreateNewInvoiceDialog, invoicesList, localStoraInvoicesName, 
+    const { closeCreateInvoice, getSelectedInvoice, isCreateNewInvoiceDialog, invoicesList, localStoraInvoicesName, 
         openCreateInvoice, setInvoiceList } = useContext(AppContext);
     const [paymentTerm, setPaymentTerm] = useState('Net 30 Day');
     const [ itemsList, setItemList ] = useState([ ]);
@@ -154,13 +154,14 @@ const CreateInvoice = () => {
     }, [ getTotalPrice, productsList ]);
 
     const [ hasItemsError, setHasItemsError ] = useState(false);
-    const { register, handleSubmit, formState: { errors }, reset  } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset, setValue  } = useForm();
     const onSubmit = data => {
         if(getTotalPrice() > 0) {
             const newItem = createInvoice(data)
             const oldList = JSON.parse(localStorage.getItem(localStoraInvoicesName.current));
             localStorage.setItem(localStoraInvoicesName.current, JSON.stringify([ ...oldList, newItem ]));
-            setInvoiceList(list => [...list, newItem])
+            setInvoiceList(list => [...list, newItem]);
+            reset();
         }
     }
     const saveHandler = event => {
@@ -173,13 +174,40 @@ const CreateInvoice = () => {
         func(handleSubmit(onSubmit));
     };
 
+    useEffect(() => {
+        const selectedInvoice = getSelectedInvoice();
+        if(!isCreateNewInvoiceDialog && Boolean(selectedInvoice)) {
+            console.log(selectedInvoice)
+            setValue('street-address', selectedInvoice['senderAddress']['street']);
+            setValue('city', selectedInvoice['senderAddress']['city']);
+            setValue('post-code', selectedInvoice['senderAddress']['postCode']);
+            setValue('country', selectedInvoice['senderAddress']['country']);
+
+            
+            setValue('client-name', selectedInvoice['clientName']);
+            setValue('client-email', selectedInvoice['clientEmail']);
+            setValue('client-street-address', selectedInvoice['clientAddress']['street']);
+            setValue('client-city', selectedInvoice['clientAddress']['city']);
+            setValue('client-post-code', selectedInvoice['clientAddress']['postCode']);
+            setValue('client-country', selectedInvoice['clientAddress']['country']);
+
+            
+            setValue('invoice-date', selectedInvoice['createdAt']);
+            setValue('payment-term', selectedInvoice['paymentTerms']);
+            setValue('project-description', selectedInvoice['description']);
+        }
+            
+    }, [ getSelectedInvoice, isCreateNewInvoiceDialog, setValue ])
+
     return (
         <Dialog 
             onClose={closeCreateInvoice} 
             aria-labelledby="dialog-title" 
             classes={{ root: classes.dialogRoot, scrollPaper: classNames(display.alignStart, responsive.smJustifyStart), paper: classes.dialogPaper}} 
             open={openCreateInvoice}>
-            <DialogTitle id="dialog-title">{ isCreateNewInvoiceDialog ? 'New Invoice' : 'Edit #XM9141' }</DialogTitle>
+            <DialogTitle id="dialog-title" classes={{ root: classNames(classes.dialogTitle, display.mt1)}}>
+                { isCreateNewInvoiceDialog ? 'New Invoice' : <>Edit <span className={classes.textPurple}>#</span>{ getSelectedInvoice().id}</> }
+            </DialogTitle>
             <DialogContent className={classNames(display.pl0, display.pr0)}>
                 { Object.keys(errors).length > 0 && <Alert 
                     severity="error"
@@ -206,7 +234,6 @@ const CreateInvoice = () => {
                                         className={classNames(classes.defaultLabel, classes.textPurple)} 
                                         htmlFor='city'>City</label>
                                     <input 
-                                        id="city" 
                                         {...register("city", { required: true })}
                                         placeholder='City'
                                         className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['city'])})} 
