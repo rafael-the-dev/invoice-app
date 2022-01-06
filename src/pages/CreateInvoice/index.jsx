@@ -96,6 +96,16 @@ const CreateInvoice = () => {
 
     const itemListMemo = useMemo(() => itemsList, [ itemsList ]);
 
+    const getTotalPrice = useCallback(() => {
+        let total = 0;
+
+        Object.values(productsList).forEach(item => {
+            total += parseFloat(item['total'])
+        });
+
+        return total;
+    }, [ productsList ]);
+
     return (
         <Dialog 
             onClose={closeCreateInvoice} 
