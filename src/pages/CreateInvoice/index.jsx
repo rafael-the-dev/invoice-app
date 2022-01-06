@@ -1,5 +1,6 @@
 import { useStyles } from './styles'
 import { Button, Dialog, DialogContent, DialogTitle, Grid, Paper, Typography, } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import classNames from 'classnames';
 import { useBackground, useDisplay, useResponsive, useTypography } from '../../styles';
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react'
@@ -56,20 +57,20 @@ const CreateInvoice = () => {
 
     const paymentsTerms = [
         {
-          value: 'Net 1 Day',
-          label: '1',
+          value: '1',
+          label: 'Net 1 Day',
         },
         {
-          value: 'Net 7 Day',
-          label: '7',
+          value: '7',
+          label: 'Net 7 Day',
         },
         {
-          value: 'Net 14 Day',
-          label: '14',
+          value: '14',
+          label: 'Net 14 Day',
         },
         {
-          value: 'Net 30 Day',
-          label: '30',
+          value: '30',
+          label: 'Net 30 Day',
         },
     ];
 
@@ -153,10 +154,11 @@ const CreateInvoice = () => {
     }, [ getTotalPrice, productsList ]);
 
     const [ hasItemsError, setHasItemsError ] = useState(false);
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset  } = useForm();
     const onSubmit = data => {
-        if(getTotalPrice() === 0) {
+        if(getTotalPrice() > 0) {
             console.log(createInvoice(data));
+            reset()
         }
     }
     const saveHandler = event => {
@@ -177,6 +179,12 @@ const CreateInvoice = () => {
             open={openCreateInvoice}>
             <DialogTitle id="dialog-title">{ isCreateNewInvoiceDialog ? 'New Invoice' : 'Edit #XM9141' }</DialogTitle>
             <DialogContent className={classNames(display.pl0, display.pr0)}>
+                { Object.keys(errors).length > 0 && <Alert 
+                    severity="error"
+                    className={classNames(display.mb1)}>
+                    Fill in all form fields!
+                </Alert>
+                }
                 <form className={classNames(display.flex, display.flexColumn, display.alignStretch)}>
                     <fieldset className={classNames(display.flex, display.flexColumn, display.alignStretch, 
                         classes.px)}>
