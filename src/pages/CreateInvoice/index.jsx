@@ -1,5 +1,5 @@
 import { useStyles } from './styles'
-import { Button, Dialog, DialogContent, DialogTitle, Grid, Paper, } from '@material-ui/core';
+import { Button, Dialog, DialogContent, DialogTitle, Grid, Paper, Typography, } from '@material-ui/core';
 import classNames from 'classnames';
 import { useBackground, useDisplay, useResponsive, useTypography } from '../../styles';
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react'
@@ -151,9 +151,20 @@ const CreateInvoice = () => {
         };
     }, [ getTotalPrice, productsList ]);
 
+    const [ hasItemsError, setHasItemsError ] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(createInvoice(data));
-    console.log(errors)
+    const onSubmit = data => {
+        console.log(createInvoice(data));
+    }
+    const saveHandler = event => {
+        event.preventDefault();
+
+        if(getTotalPrice() === 0) {
+            setHasItemsError(true);
+        }
+        const func  = f => f();
+        func(handleSubmit(onSubmit));
+    };
 
     return (
         <Dialog 
@@ -353,6 +364,7 @@ const CreateInvoice = () => {
                         <Grid container className={classNames()}>
                             { itemListMemo }
                         </Grid>
+                        { hasItemsError && <div><Typography variant="h6" className={classNames(classes.errorText)}>No items added</Typography></div> }
                         <Button onClick={addItemClickHandler} className={classNames(classes.buttonPill, classes.editButton, display.mt2, 
                             display.w100, text.font7)}>
                             + Add New Item
@@ -368,7 +380,7 @@ const CreateInvoice = () => {
                             <Button 
                                 type="submit"
                                 className={classNames(classes.buttonPill, text.rem7, display.ml1, text.font7, text.textLight, classes.saveButton)}
-                                onClick={handleSubmit(onSubmit)}>
+                                onClick={saveHandler}>
                                 Save &amp; Send
                             </Button>
                         </Paper>

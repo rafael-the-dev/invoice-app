@@ -93,5 +93,8 @@ export const useStyles = makeStyles(theme => ({
     error: {
         border: '1px solid red !important',
         color: 'red !important'
+    },
+    errorText: {
+        color: 'red'
     }
 }));
