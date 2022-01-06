@@ -5,7 +5,6 @@ import DefaultButton from '../../components/Button';
 import { useBackground, useDisplay, useResponsive, useTypography } from '../../styles';
 import { useClasses } from './styles';
 import { useContext, useEffect, useState } from 'react';
-import data from '../../data.json';
 import ReportCard from '../../components/ReportCard';
 import { useCallback } from 'react';
 import { ThemeContext } from '../../context/ThemeContext'
@@ -20,7 +19,7 @@ const Home = () => {
     const responsive = useResponsive();
     const text = useTypography();
 
-    const { displayCreateInvoice, openCreateInvoice } = useContext(AppContext);
+    const { displayCreateInvoice, invoicesList, openCreateInvoice } = useContext(AppContext);
 
     const { theme } = useContext(ThemeContext);
     const themeStyles = useTheme(theme);
@@ -40,14 +39,14 @@ const Home = () => {
         let filter = []; 
         Object.entries(state).forEach(currentValue => {
             if(currentValue[1]) {
-                filter.push(...data.filter(invoice => invoice.status.toLowerCase() === currentValue[0]));
+                filter.push(...invoicesList.filter(invoice => invoice.status.toLowerCase() === currentValue[0]));
             }
         }, []);
         if(filter.length > 0)
             return filter;
         else 
-            return data;
-    }, [ state ])
+            return invoicesList;
+    }, [ state, invoicesList ])
 
     const { draft, paid, pending } = state;
     const popoverId = anchorEl ? 'popover' : undefined;

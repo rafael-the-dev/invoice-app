@@ -20,7 +20,8 @@ const CreateInvoice = () => {
     const responsive = useResponsive();
     const text = useTypography();
 
-    const { closeCreateInvoice, isCreateNewInvoiceDialog, openCreateInvoice } = useContext(AppContext);
+    const { closeCreateInvoice, isCreateNewInvoiceDialog, invoicesList, localStoraInvoicesName, 
+        openCreateInvoice, setInvoiceList } = useContext(AppContext);
     const [paymentTerm, setPaymentTerm] = useState('Net 30 Day');
     const [ itemsList, setItemList ] = useState([ ]);
     const [ productsList, setProductsList ] = useState({});
@@ -54,22 +55,21 @@ const CreateInvoice = () => {
             <ItemCard index={index} setItemList={setItemList} setProductsList={setProductsList} productsList={productsList} />
         ])
     }, [])*/
-
     const paymentsTerms = [
         {
-          value: '1',
+          value: 1,
           label: 'Net 1 Day',
         },
         {
-          value: '7',
+          value: 7,
           label: 'Net 7 Day',
         },
         {
-          value: '14',
+          value: 14,
           label: 'Net 14 Day',
         },
         {
-          value: '30',
+          value: 30,
           label: 'Net 30 Day',
         },
     ];
@@ -130,7 +130,7 @@ const CreateInvoice = () => {
         return {
             "id": invoiceID.current,
             "createdAt": data['invoice-date'],
-            "paymentDue": moment(data['invoice-date']).add(data['payment-term'], 'days'),
+            "paymentDue": new Date(moment(data['invoice-date']).add(data['payment-term'], 'days')),
             "description": data['project-description'],
             "paymentTerms": data['payment-term'],
             "clientName": data['client-name'],
@@ -157,8 +157,10 @@ const CreateInvoice = () => {
     const { register, handleSubmit, formState: { errors }, reset  } = useForm();
     const onSubmit = data => {
         if(getTotalPrice() > 0) {
-            console.log(createInvoice(data));
-            reset()
+            const newItem = createInvoice(data)
+            const oldList = JSON.parse(localStorage.getItem(localStoraInvoicesName.current));
+            localStorage.setItem(localStoraInvoicesName.current, JSON.stringify([ ...oldList, newItem ]));
+            setInvoiceList(list => [...list, newItem])
         }
     }
     const saveHandler = event => {

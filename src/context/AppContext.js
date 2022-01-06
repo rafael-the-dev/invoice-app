@@ -1,4 +1,5 @@
-import { createContext, useCallback, useState } from 'react';
+import { createContext, useCallback, useEffect, useRef, useState } from 'react';
+import data from '../data.json';
 
 export const AppContext = createContext();
 AppContext.displayName = 'AppContext';
@@ -6,6 +7,8 @@ AppContext.displayName = 'AppContext';
 export const AppContextProvider = ({ children }) => {
     const [ openCreateInvoice, setOpenCreateInvoice ] = useState(false);
     const [ isCreateNewInvoiceDialog, setIsCreateNewInvoiceDialog ] = useState(false);
+    const [ invoicesList, setInvoiceList ] = useState([]);
+    const localStoraInvoicesName = useRef('invoice-app__invoices')
 
     const closeCreateInvoice = useCallback(() => setOpenCreateInvoice(false), []);
     const displayCreateInvoice = useCallback((state) => () => {
@@ -13,7 +16,17 @@ export const AppContextProvider = ({ children }) => {
         setOpenCreateInvoice(true);
     }, []);
 
+    useEffect(() => {
+        if(!Boolean(localStorage.getItem(localStoraInvoicesName.current))) {
+            localStorage.setItem(localStoraInvoicesName.current, JSON.stringify([]));
+            setInvoiceList([ ...data, ])
+        } else {
+            setInvoiceList([ ...data, ...JSON.parse(localStorage.getItem(localStoraInvoicesName.current))])
+        }
+    }, [])
+
     return (
-        <AppContext.Provider value={{ closeCreateInvoice, displayCreateInvoice, isCreateNewInvoiceDialog, openCreateInvoice }}>{ children }</AppContext.Provider>
+        <AppContext.Provider value={{ closeCreateInvoice, displayCreateInvoice, invoicesList, setInvoiceList, 
+            isCreateNewInvoiceDialog, localStoraInvoicesName, openCreateInvoice }}>{ children }</AppContext.Provider>
     );
 }

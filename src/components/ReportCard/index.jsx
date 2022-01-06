@@ -21,7 +21,12 @@ const ReportCard = ({ report }) => {
         paid: classes.cardPaidButton,
         pending: classes.cardPendingButton,
         draft: classes.cardDraftButton
-    })
+    });
+
+    const getDate = () => {
+        const date = new Date(report.paymentDue);
+        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    }
 
     return (
         <Card className={classNames(theme.componentBg)}>
@@ -42,7 +47,7 @@ const ReportCard = ({ report }) => {
                             elevation={0} 
                             className={classNames(display.flex, display.flexColumn, responsive.smRow, bg.transparent, responsive.smAlignCenter)}>
                             <Typography  component="p" variant="body2" className={classNames(classes.lightGareyText)}>
-                                { report.paymentDue }
+                                { getDate() }
                             </Typography>
                             <Typography  component="p" variant="h6" className={classNames(text.font7, classes.cardPrice)}>
                                 £{ report.total }
@@ -61,7 +66,7 @@ const ReportCard = ({ report }) => {
                             <span className={classNames(themeStyles.darkWhiteText)}>{ report.id }</span>
                         </Typography>
                         <Typography  component="p" variant="body2" className={classNames(classes.lightGareyText)}>
-                            Due { report.paymentDue }
+                            Due { getDate() }
                         </Typography>
                         <Typography component="p" variant="body2" className={classNames(classes.lightGareyText)}>
                             { report.clientName }
