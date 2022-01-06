@@ -106,6 +106,22 @@ const CreateInvoice = () => {
         return total;
     }, [ productsList ]);
 
+    const getRandomLetter = useCallback(() => {
+        const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
+            'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+        return letters[Math.floor(Math.random() * letters.length)];
+    }, []);
+
+    const getRandomNumber = useCallback(() => {
+        const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+        return numbers[Math.floor(Math.random() * numbers.length)];
+    }, []);
+
+    const invoiceID = useRef('');
+    useEffect(() => {
+        invoiceID.current = `${getRandomLetter()}${getRandomLetter()}${getRandomNumber()}${getRandomNumber()}${getRandomNumber()}${getRandomNumber()}`;
+    }, [ getRandomLetter, getRandomNumber ]);
+
     return (
         <Dialog 
             onClose={closeCreateInvoice} 
