@@ -264,6 +264,16 @@ const CreateInvoice = () => {
 
     }, [ getEditedInvoice, getSelectedInvoice, reset, setInvoiceList, setSelectedInvoice ]);
 
+    const deleteClickHandler = useCallback(() => {
+        setInvoiceList(oldList => {
+            const list = [ ...oldList ];
+            const result = list.filter(item => item.id !== getSelectedInvoice().id);
+            reset();
+            setSelectedInvoice({ ...getEditedInvoice(), id: ''})
+            return result;
+        }, []);
+    }, [ getEditedInvoice, getSelectedInvoice, reset, setInvoiceList, setSelectedInvoice ]);
+
     return (
         <Dialog 
             onClose={closeCreateInvoice} 
@@ -499,7 +509,12 @@ const CreateInvoice = () => {
                             <Button 
                                 className={classNames(classes.buttonPill, text.rem8, text.font7, classes.editButton)}
                                 onClick={editClickHandler}>Edit</Button>
-                            <Button className={classNames(classes.buttonPill, text.rem8, responsive.smMl1, text.font7, text.textLight, classes.saveButton)}>Delete</Button>
+                            <Button 
+                                className={classNames(classes.buttonPill, text.rem8, responsive.smMl1, text.font7, 
+                                text.textLight, classes.saveButton)}
+                                onClick={deleteClickHandler}>
+                                Delete
+                            </Button>
                         </Paper>
                     ) }
                 </form>
