@@ -20,8 +20,8 @@ const CreateInvoice = () => {
     const responsive = useResponsive();
     const text = useTypography();
 
-    const { closeCreateInvoice, getSelectedInvoice, isCreateNewInvoiceDialog, localStoraInvoicesName, 
-        openCreateInvoice, setInvoiceList } = useContext(AppContext);
+    const { closeCreateInvoice, getSelectedInvoice, isCreateNewInvoiceDialog, 
+        openCreateInvoice, setInvoiceList, setSelectedInvoice } = useContext(AppContext);
     const [paymentTerm, setPaymentTerm] = useState('Net 30 Day');
     const [ itemsList, setItemList ] = useState([ ]);
     const [ productsList, setProductsList ] = useState({});
@@ -154,12 +154,10 @@ const CreateInvoice = () => {
     }, [ getTotalPrice, productsList ]);
 
     const [ hasItemsError, setHasItemsError ] = useState(false);
-    const { register, handleSubmit, formState: { errors }, reset, setValue  } = useForm();
+    const { register, handleSubmit, formState: { errors }, getValues , reset, setValue  } = useForm();
     const onSubmit = data => {
         if(getTotalPrice() > 0) {
             const newItem = createInvoice(data)
-            const oldList = JSON.parse(localStorage.getItem(localStoraInvoicesName.current));
-            localStorage.setItem(localStoraInvoicesName.current, JSON.stringify([ ...oldList, newItem ]));
             setInvoiceList(list => [...list, newItem]);
             reset();
         }
@@ -178,7 +176,6 @@ const CreateInvoice = () => {
     useEffect(() => {
         const selectedInvoice = getSelectedInvoice();
         if(!isCreateNewInvoiceDialog && Boolean(selectedInvoice)) {
-            console.log(selectedInvoice)
             setValue('street-address', selectedInvoice['senderAddress']['street']);
             setValue('city', selectedInvoice['senderAddress']['city']);
             setValue('post-code', selectedInvoice['senderAddress']['postCode']);
@@ -226,6 +223,46 @@ const CreateInvoice = () => {
             setItemList(list);
         }
     }, [ productsList ]);
+    const getEditedInvoice = useCallback(() => {
+        return {
+            "id": getSelectedInvoice().id,
+            "createdAt": getValues('invoice-date'),
+            "paymentDue": new Date(moment(getValues('invoice-date')).add(getValues('payment-term'), 'days')),
+            "description": getValues('project-description'),
+            "paymentTerms": getValues('payment-term'),
+            "clientName": getValues('client-name'),
+            "clientEmail": getValues('client-email'),
+            "status": "pending",
+            "senderAddress": {
+              "street": getValues('street-address'),
+              "city":  getValues('city'),
+              "postCode": getValues('post-code'),
+              "country": getValues('country')
+            },
+            "clientAddress": {
+              "street": getValues('client-street-address'),
+              "city": getValues('client-city'),
+              "postCode": getValues('client-post-code'),
+              "country": getValues('client-country')
+            },
+            "items": Object.values(productsList).filter(item => item.quantity > 0),
+            "total": getTotalPrice()
+        }
+    }, [ getSelectedInvoice, getValues, getTotalPrice, productsList ]);
+
+    const editClickHandler = useCallback(() => {
+        setInvoiceList(oldList => {
+            const list = [ ...oldList ];
+            const result = list.findIndex(item => item.id === getSelectedInvoice().id);
+            if(result !== -1) {
+                list[result] = getEditedInvoice();
+                reset();
+                setSelectedInvoice({ ...getEditedInvoice(), id: ''})
+            }
+            return list;
+        }, []);
+
+    }, [ getEditedInvoice, getSelectedInvoice, reset, setInvoiceList, setSelectedInvoice ]);
 
     return (
         <Dialog 
@@ -234,7 +271,7 @@ const CreateInvoice = () => {
             classes={{ root: classes.dialogRoot, scrollPaper: classNames(display.alignStart, responsive.smJustifyStart), paper: classes.dialogPaper}} 
             open={openCreateInvoice}>
             <DialogTitle id="dialog-title" classes={{ root: classNames(classes.dialogTitle, display.mt1)}}>
-                { isCreateNewInvoiceDialog ? 'New Invoice' : <>Edit <span className={classes.textPurple}>#</span>{ getSelectedInvoice().id}</> }
+                { isCreateNewInvoiceDialog ? 'New Invoice' : <>Edit { getSelectedInvoice().id && <span className={classes.textPurple}>#</span> }{ getSelectedInvoice().id}</> }
             </DialogTitle>
             <DialogContent className={classNames(display.pl0, display.pr0)}>
                 { Object.keys(errors).length > 0 && <Alert 
@@ -459,7 +496,9 @@ const CreateInvoice = () => {
                         </Paper>
                     ) : (
                         <Paper elevation={0} className={classNames(display.pt1, classes.px, display.pb1, display.flex, display.alignCenter, display.justifyEnd)}>
-                            <Button className={classNames(classes.buttonPill, text.rem8, text.font7, classes.editButton)}>Edit</Button>
+                            <Button 
+                                className={classNames(classes.buttonPill, text.rem8, text.font7, classes.editButton)}
+                                onClick={editClickHandler}>Edit</Button>
                             <Button className={classNames(classes.buttonPill, text.rem8, responsive.smMl1, text.font7, text.textLight, classes.saveButton)}>Delete</Button>
                         </Paper>
                     ) }
