@@ -13,7 +13,7 @@ const ReportCard = ({ report }) => {
     const text = useTypography();
     const responsive = useResponsive();
     const bg = useBackground();
-    const status = report.status.toLowerCase();
+   // const status = report.status.toLowerCase();
 
     const { displayCreateInvoice } = useContext(AppContext);
     const { theme } = useContext(ThemeContext);

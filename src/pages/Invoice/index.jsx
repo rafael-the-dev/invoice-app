@@ -1,7 +1,7 @@
 import { useStyles } from './styles'
-import { Button, FormGroup, Checkbox, Grid, Hidden, Paper, Popover, Typography } from '@material-ui/core';
+import { Button, Hidden, Paper, Typography } from '@material-ui/core';
 import classNames from 'classnames';
-import { useBackground, useDisplay, useResponsive, useTypography } from '../../styles';
+import { useDisplay, useResponsive, useTypography } from '../../styles';
 import Header from '../../components/Header';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { useMemo } from 'react';
@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom';
 const Invoice = () => {
     const display = useDisplay();
     const classes = useStyles();
-    const bg = useBackground();
+    //const bg = useBackground();
     const responsive = useResponsive();
     const text = useTypography();
 

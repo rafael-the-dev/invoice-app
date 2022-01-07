@@ -2,7 +2,7 @@ import { useStyles } from './styles'
 import { Button, Dialog, DialogContent, DialogTitle, Grid, Paper, Typography, } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import classNames from 'classnames';
-import { useBackground, useDisplay, useResponsive, useTypography } from '../../styles';
+import { useDisplay, useResponsive, useTypography } from '../../styles';
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react'
 import { AppContext } from '../../context/AppContext';
 import TextField from '@material-ui/core/TextField';
@@ -16,11 +16,11 @@ import moment from 'moment';
 const CreateInvoice = () => {
     const display = useDisplay();
     const classes = useStyles();
-    const bg = useBackground();
+    //const bg = useBackground();
     const responsive = useResponsive();
     const text = useTypography();
 
-    const { closeCreateInvoice, getSelectedInvoice, isCreateNewInvoiceDialog, invoicesList, localStoraInvoicesName, 
+    const { closeCreateInvoice, getSelectedInvoice, isCreateNewInvoiceDialog, localStoraInvoicesName, 
         openCreateInvoice, setInvoiceList } = useContext(AppContext);
     const [paymentTerm, setPaymentTerm] = useState('Net 30 Day');
     const [ itemsList, setItemList ] = useState([ ]);
@@ -174,6 +174,7 @@ const CreateInvoice = () => {
         func(handleSubmit(onSubmit));
     };
 
+    const canIGenerateItems = useRef(false);
     useEffect(() => {
         const selectedInvoice = getSelectedInvoice();
         if(!isCreateNewInvoiceDialog && Boolean(selectedInvoice)) {
@@ -195,9 +196,36 @@ const CreateInvoice = () => {
             setValue('invoice-date', selectedInvoice['createdAt']);
             setValue('payment-term', selectedInvoice['paymentTerms']);
             setValue('project-description', selectedInvoice['description']);
+
+            const items = selectedInvoice['items'];
+            let index = nextId();
+            let list = {};
+            items.forEach(item => {
+                list = { ...list, [index]: item}
+                index = nextId();
+            });
+            nextProductID.current = index;
+            canIGenerateItems.current = true;
+            setProductsList(list);
         }
             
-    }, [ getSelectedInvoice, isCreateNewInvoiceDialog, setValue ])
+    }, [ getSelectedInvoice, isCreateNewInvoiceDialog, setValue ]);
+
+    useEffect(() => {
+        if((Object.keys(productsList).length > 0) && (canIGenerateItems.current)) {
+            canIGenerateItems.current = false;
+            const list = Object.keys(productsList).map(key => (
+                <ItemCard 
+                    key={key} 
+                    index={key} 
+                    setItemList={setItemList} 
+                    setProductsList={setProductsList} 
+                    productsList={productsList} 
+                />
+            ));
+            setItemList(list);
+        }
+    }, [ productsList ]);
 
     return (
         <Dialog 

@@ -1,5 +1,5 @@
 import { useStyles } from './styles';
-import { useBackground, useDisplay, useResponsive, useTypography } from '../../../styles';
+import { useDisplay, useResponsive } from '../../../styles';
 import classNames from 'classnames';
 import { Grid, IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -8,9 +8,9 @@ import { useEffect, useRef } from 'react'
 const ItemCard = ({ index, setItemList, setProductsList, productsList }) => {
     const display = useDisplay();
     const classes = useStyles();
-    const bg = useBackground();
+    //const bg = useBackground();
     const responsive = useResponsive();
-    const text = useTypography();
+    //const text = useTypography();
     const nameRef = useRef(null);
     const quantityRef = useRef(null);
     const priceRef = useRef(null);
@@ -44,6 +44,17 @@ const ItemCard = ({ index, setItemList, setProductsList, productsList }) => {
             return list;
         })
     };
+
+    const autoFill = useRef(true);
+    useEffect(() => {
+        if((autoFill.current) && Boolean(productsList[index])) {
+            nameRef.current.value = productsList[index].name
+            quantityRef.current.value = productsList[index].quantity
+            priceRef.current.value = productsList[index].price
+            totalRef.current.value = productsList[index].total
+            autoFill.current = false;
+        }
+    }, [ index, productsList ]);
 
    return (
         <Grid item xs={12} className={classNames(display.flex, display.flexColumn, display.alignStretch)}>
