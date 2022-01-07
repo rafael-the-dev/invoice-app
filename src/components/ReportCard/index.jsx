@@ -26,6 +26,9 @@ const ReportCard = ({ report }) => {
     });
 
     const getDate = () => {
+        console.log(report.paymentDue)
+        if(report.paymentDue === null) 
+            return "not set";
         const date = new Date(report.paymentDue);
         return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     }

@@ -122,9 +122,12 @@ const CreateInvoice = () => {
     }, []);
 
     const invoiceID = useRef('');
-    useEffect(() => {
+    const generateInvoiceID = useCallback(() => {
         invoiceID.current = `${getRandomLetter()}${getRandomLetter()}${getRandomNumber()}${getRandomNumber()}${getRandomNumber()}${getRandomNumber()}`;
     }, [ getRandomLetter, getRandomNumber ]);
+    useEffect(() => {
+        generateInvoiceID();
+    }, [ generateInvoiceID ]);
 
     const createInvoice = useCallback((data) => {
         return {
@@ -160,6 +163,7 @@ const CreateInvoice = () => {
             const newItem = createInvoice(data)
             setInvoiceList(list => [...list, newItem]);
             reset();
+            generateInvoiceID()
         }
     }
     const saveHandler = event => {
@@ -223,16 +227,16 @@ const CreateInvoice = () => {
             setItemList(list);
         }
     }, [ productsList ]);
-    const getEditedInvoice = useCallback(() => {
+    const getEditedInvoice = useCallback(({ id, status }) => {
         return {
-            "id": getSelectedInvoice().id,
+            "id": id ? id : getSelectedInvoice().id,
             "createdAt": getValues('invoice-date'),
             "paymentDue": new Date(moment(getValues('invoice-date')).add(getValues('payment-term'), 'days')),
             "description": getValues('project-description'),
             "paymentTerms": getValues('payment-term'),
             "clientName": getValues('client-name'),
             "clientEmail": getValues('client-email'),
-            "status": "pending",
+            "status": status ? status : "pending",
             "senderAddress": {
               "street": getValues('street-address'),
               "city":  getValues('city'),
@@ -250,14 +254,21 @@ const CreateInvoice = () => {
         }
     }, [ getSelectedInvoice, getValues, getTotalPrice, productsList ]);
 
+    const saveAsDraftClickHandler = useCallback(() => {
+        const newItem = getEditedInvoice({ id: invoiceID.current, status: 'draft'})
+        setInvoiceList(list => [...list, newItem]);
+        reset();
+        generateInvoiceID();
+    }, [ generateInvoiceID, getEditedInvoice, reset, setInvoiceList ])
+
     const editClickHandler = useCallback(() => {
         setInvoiceList(oldList => {
             const list = [ ...oldList ];
             const result = list.findIndex(item => item.id === getSelectedInvoice().id);
             if(result !== -1) {
-                list[result] = getEditedInvoice();
+                list[result] = getEditedInvoice({});
                 reset();
-                setSelectedInvoice({ ...getEditedInvoice(), id: ''})
+                setSelectedInvoice({ ...getEditedInvoice({}), id: ''})
             }
             return list;
         }, []);
@@ -495,7 +506,9 @@ const CreateInvoice = () => {
                         <Paper elevation={0} className={classNames(display.pt1, classes.px, display.pb1, display.flex, display.alignCenter, display.justifyEnd)}>
                             <Button className={classNames(classes.buttonPill, text.rem7, text.font7, classes.editButton)}>Edit</Button>
                             <Button 
-                                className={classNames(classes.buttonPill, text.rem7, display.ml1, text.font7, text.textLight, classes.saveAsDraft)}
+                                className={classNames(classes.buttonPill, text.rem7, display.ml1, text.font7, 
+                                    text.textLight, classes.saveAsDraft)}
+                                onClick={saveAsDraftClickHandler}
                                 >Save as Draft</Button>
                             <Button 
                                 type="submit"
