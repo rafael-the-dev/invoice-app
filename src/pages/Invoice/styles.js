@@ -36,6 +36,14 @@ export const useStyles = makeStyles(theme => ({
         backgroundColor: '#ff8f0021',
         color: '#FF8F00',
     },
+    paidStatus: {
+        backgroundColor: '#33d69f1a',
+        color: '#33D69F',
+    },
+    draftStatus: {
+        backgroundColor: '#dfe3fa87',
+        color: '#373B53'
+    },
     checkout: {
         backgroundColor: '#F9FAFE',
         borderRadius: 7

@@ -10,6 +10,7 @@ import { AppContext } from '../../context/AppContext'
 import { useState } from 'react';
 import { useCallback } from 'react';
 import CreateInvoice from '../CreateInvoice';
+import { useRef } from 'react';
 
 const Invoice = () => {
     const display = useDisplay();
@@ -24,6 +25,12 @@ const Invoice = () => {
     const { id } = useParams();
 
     //const editeClickHandler = useCallback(() => , [ displayCreateInvoice, invoice ]);
+
+    const statusRef = useRef({
+        draft: classes.draftStatus,
+        paid: classes.paidStatus,
+        pending: classes.peddingStatus,
+    })
 
     const deleteClickHandler = useCallback(() => {
         setInvoiceList(oldList => {
@@ -85,26 +92,26 @@ const Invoice = () => {
                     <Table className={classes.table} aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell className={classNames(classes.textLightPurple)}>Item Name</TableCell>
-                                <TableCell align="right" className={classNames(classes.textLightPurple)}>QTY</TableCell>
-                                <TableCell align="right" className={classNames(classes.textLightPurple)}>Price</TableCell>
-                                <TableCell align="right" className={classNames(classes.textLightPurple)}>Total</TableCell>
+                                <TableCell className={classNames(classes.textLightPurple, display.borderNone)}>Item Name</TableCell>
+                                <TableCell align="right" className={classNames(classes.textLightPurple, display.borderNone)}>QTY</TableCell>
+                                <TableCell align="right" className={classNames(classes.textLightPurple, display.borderNone)}>Price</TableCell>
+                                <TableCell align="right" className={classNames(classes.textLightPurple, display.borderNone)}>Total</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {invoice.items.map((item, index) => (
                                 <TableRow key={index}>
-                                    <TableCell component="th" scope="row" className={classNames(text.font7)}>{ item.name }</TableCell>
-                                    <TableCell align="right" className={classNames(classes.textLightPurple, text.font7)}>{item.quantity}</TableCell>
-                                    <TableCell align="right" className={classNames(classes.textLightPurple, text.font7)}>£ {item.price}</TableCell>
-                                    <TableCell align="right" className={classNames(text.font7)}>£ {item.total}</TableCell>
+                                    <TableCell component="th" scope="row" className={classNames(text.font7, display.borderNone)}>{ item.name }</TableCell>
+                                    <TableCell align="right" className={classNames(classes.textLightPurple, text.font7, display.borderNone)}>{item.quantity}</TableCell>
+                                    <TableCell align="right" className={classNames(classes.textLightPurple, text.font7, display.borderNone)}>£ {item.price}</TableCell>
+                                    <TableCell align="right" className={classNames(text.font7, display.borderNone)}>£ {item.total}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
             </TableContainer>
         </Hidden>
-    ), [ bg, classes, invoice, text ]);
+    ), [ bg, classes, display, invoice, text ]);
 
     const getItems = useCallback(() => {
         return invoice.items ? <>
@@ -155,7 +162,7 @@ const Invoice = () => {
                         <div className={classNames(display.flex, display.justifyBetween, display.alignCenter, 
                             responsive.mdAlignStart, classes.statusContainer)}>
                             <Typography className={classNames(classes.textLightPurple)}>Status</Typography>
-                            <Typography className={classNames(text.font7, classes.peddingStatus, classes.status)}>{ invoice.status }</Typography>
+                            <Typography className={classNames(text.font7, classes.status, statusRef.current[invoice.status])}>{ invoice.status }</Typography>
                         </div>
                         <div  className={classNames(display.none, display.alignCenter, display.justifyBetween,
                             responsive.smFlex)}>
