@@ -7,9 +7,11 @@ AppContext.displayName = 'AppContext';
 export const AppContextProvider = ({ children }) => {
     const [ openCreateInvoice, setOpenCreateInvoice ] = useState(false);
     const [ isCreateNewInvoiceDialog, setIsCreateNewInvoiceDialog ] = useState(false);
+    const [ openDeleteDialog, setOpenDeleteDialog ] = useState(false);
     const [ invoicesList, setInvoiceList ] = useState([]);
     const localStoraInvoicesName = useRef('invoice-app__invoices');
     const selectedInvoice = useRef({});
+    const invoiceToBeDeleted = useRef({});
 
     const closeCreateInvoice = useCallback(() => setOpenCreateInvoice(false), []);
     const displayCreateInvoice = useCallback((state, report) => () => {
@@ -20,6 +22,11 @@ export const AppContextProvider = ({ children }) => {
 
     const getSelectedInvoice = useCallback(() => selectedInvoice.current, []);
     const setSelectedInvoice = useCallback((newInvoice) => selectedInvoice.current = newInvoice, []);
+
+    const getInvoiceToBeDeleted = useCallback(() => invoiceToBeDeleted.current, []);
+    const setInvoiceToBeDeleted = useCallback((newInvoice) => invoiceToBeDeleted.current = newInvoice, []);
+
+    const handleCloseDeleteDialog = useCallback(() => setOpenDeleteDialog(false), []);
 
     useEffect(() => {
         if(!Boolean(localStorage.getItem(localStoraInvoicesName.current))) {
@@ -38,7 +45,9 @@ export const AppContextProvider = ({ children }) => {
     }, [ invoicesList ])
 
     return (
-        <AppContext.Provider value={{ closeCreateInvoice, displayCreateInvoice, getSelectedInvoice, invoicesList, setInvoiceList, 
-            isCreateNewInvoiceDialog, localStoraInvoicesName, openCreateInvoice, setSelectedInvoice }}>{ children }</AppContext.Provider>
+        <AppContext.Provider value={{ closeCreateInvoice, displayCreateInvoice, getSelectedInvoice, 
+            handleCloseDeleteDialog, getInvoiceToBeDeleted, invoicesList, setInvoiceList, 
+            isCreateNewInvoiceDialog, localStoraInvoicesName, openCreateInvoice, openDeleteDialog, 
+            setInvoiceToBeDeleted, setOpenDeleteDialog, setSelectedInvoice }}>{ children }</AppContext.Provider>
     );
 }

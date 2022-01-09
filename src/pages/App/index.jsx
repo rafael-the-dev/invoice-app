@@ -4,6 +4,7 @@ import { AppContextProvider } from '../../context/AppContext';
 import { ThemeContextProvider } from '../../context/ThemeContext';
 import Home from '../Home';
 import Invoice from '../Invoice';
+import DeleteDialog from '../../components/DeleteDialog';
 
 const App = () => {
     const homeMemo = useMemo(() => <Home />, []);
@@ -13,10 +14,11 @@ const App = () => {
             <AppContextProvider>
                 <BrowserRouter>
                     <Switch>
-                        <Route exact path='/invoice/:id'>{ invoiceMemo }</Route>
-                        <Route path='/'>{ homeMemo }</Route>
+                        <Route exact path='/invoice/:id'><>{ invoiceMemo } <DeleteDialog /></></Route>
+                        <Route path='/'><>{ homeMemo } <DeleteDialog /></></Route>
                     </Switch>
                 </BrowserRouter>
+                
             </AppContextProvider>
         </ThemeContextProvider>
     );

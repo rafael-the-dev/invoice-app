@@ -19,7 +19,7 @@ const Invoice = () => {
     const responsive = useResponsive();
     const text = useTypography();
 
-    const { displayCreateInvoice, invoicesList, openCreateInvoice, setInvoiceList } = useContext(AppContext);
+    const { displayCreateInvoice, invoicesList, openCreateInvoice, setInvoiceList, setOpenDeleteDialog, setInvoiceToBeDeleted } = useContext(AppContext);
     const [ invoice, setInvoice ] = useState({});
     const history = useHistory();
     const { id } = useParams();
@@ -32,13 +32,13 @@ const Invoice = () => {
         pending: classes.peddingStatus,
     })
 
-    const deleteClickHandler = useCallback(() => {
+    /*const deleteClickHandler = useCallback(() => {
         setInvoiceList(oldList => {
             const list = [ ...oldList ];
             const result = list.filter(item => item.id !== invoice.id);
             return result;
         }, []);
-    }, [ invoice, setInvoiceList ]);
+    }, [ invoice, setInvoiceList ]);*/
 
     const markAsPaidClickHandler = useCallback(() => {
         setInvoiceList(oldList => {
@@ -57,19 +57,19 @@ const Invoice = () => {
                 onClick={displayCreateInvoice(false, invoice)}
                 className={classNames(classes.buttonPill, text.rem8, text.font7, classes.editButton)}>Edit</Button>
             <Button 
-                onClick={deleteClickHandler}
+                onClick={() => setOpenDeleteDialog(true)}
                 className={classNames(classes.buttonPill, text.rem8, responsive.smMl1, text.font7, text.textLight, classes.deleteButton)}>Delete</Button>
             <Button 
                 onClick={markAsPaidClickHandler}
                 className={classNames(classes.buttonPill, text.rem8, responsive.smMl1, text.font7, text.textLight, classes.saveButton)}>Mark as paid</Button>
         </>
-    ), [ classes, deleteClickHandler, displayCreateInvoice, invoice, markAsPaidClickHandler, text, responsive ]);
+    ), [ classes, displayCreateInvoice, invoice, markAsPaidClickHandler, responsive, setOpenDeleteDialog, text ]);
 
     const BillToContainer = ({ hide }) => (
         <div className={classNames(display.ml2, responsive.smMl0, 
             {[display.none]: hide, [responsive.smInlineBlock]: hide, [responsive.smNone]: !hide})}>
             <Typography gutterBottom className={classNames(classes.textLightPurple)}>Bill To</Typography>
-            <Typography gutterBottom className={classNames(text.font7)}>Alex Grim</Typography>
+            <Typography gutterBottom className={classNames(text.font7)}>{ invoice.clientName }</Typography>
             <Typography className={classNames(display.mb1, classes.textLightPurple)}>
                 { invoice.clientAddress?.street}<br/>
                 { invoice.clientAddress?.city}<br/>
@@ -117,8 +117,8 @@ const Invoice = () => {
         return invoice.items ? <>
         <Hidden smUp>
             {
-                invoice.items.map(item => (
-                    <div className={classNames(display.flex, display.alignCenter, display.justifyBetween,
+                invoice.items.map((item, index) => (
+                    <div key={index} className={classNames(display.flex, display.alignCenter, display.justifyBetween,
                         display.mb1)}>
                         <Typography className={classNames()}>
                             <spna className={classNames(text.font7)}>{ item.name }</spna><br />
@@ -140,9 +140,10 @@ const Invoice = () => {
             const result = invoicesList.find(item => item.id === id);
             if(result) {
                 setInvoice(result);
+                setInvoiceToBeDeleted(result);
             }
         }
-    }, [ id, invoicesList ]);
+    }, [ id, invoicesList, setInvoiceToBeDeleted ]);
 
     return (
         <>
@@ -173,7 +174,7 @@ const Invoice = () => {
                         <div className={classNames(display.flex, display.justifyBetween, display.flexColumn, responsive.smRow)}>
                             <Typography className={classNames(display.mb2, responsive.smMb0)}>
                                 <span className={classNames(classes.textLightPurple)}>#</span>
-                                <spna className={classNames(text.font7)}>{ invoice.id }</spna><br />
+                                <span className={classNames(text.font7)}>{ invoice.id }</span><br />
                                 <span className={classNames(classes.textLightPurple)}>{ invoice.description }</span>
                             </Typography>
                             <Typography className={classNames(classes.textLightPurple, text.alignLeft)}>
@@ -230,14 +231,3 @@ const Invoice = () => {
 };
 
 export default Invoice;
-
-/**
- * 
-                            <div className={classNames(display.flex, display.alignCenter, display.justifyBetween)}>
-                                <Typography className={classNames()}>
-                                    <spna className={classNames(text.font7)}>Email Design</spna><br />
-                                    <span className={classNames(classes.textLightPurple)}>2 x £ 200.00</span>
-                                </Typography>
-                                <Typography className={classNames(text.font7)}>£ 400.00</Typography>
-                            </div>
- */
