@@ -1,7 +1,7 @@
 import { useStyles } from './styles'
-import { Button, Hidden, Paper, Typography } from '@material-ui/core';
+import { Button, Hidden, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
 import classNames from 'classnames';
-import { useDisplay, useResponsive, useTypography } from '../../styles';
+import { useBackground, useDisplay, useResponsive, useTypography } from '../../styles';
 import Header from '../../components/Header';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { useContext, useEffect, useMemo } from 'react';
@@ -14,7 +14,7 @@ import CreateInvoice from '../CreateInvoice';
 const Invoice = () => {
     const display = useDisplay();
     const classes = useStyles();
-    //const bg = useBackground();
+    const bg = useBackground();
     const responsive = useResponsive();
     const text = useTypography();
 
@@ -79,20 +79,54 @@ const Invoice = () => {
         return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     };
 
+    const getItemsAsTable = useCallback(() => (
+        <Hidden smDown>
+            <TableContainer component={Paper} elevation={0} className={classNames(bg.transparent)}>
+                    <Table className={classes.table} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell className={classNames(classes.textLightPurple)}>Item Name</TableCell>
+                                <TableCell align="right" className={classNames(classes.textLightPurple)}>QTY</TableCell>
+                                <TableCell align="right" className={classNames(classes.textLightPurple)}>Price</TableCell>
+                                <TableCell align="right" className={classNames(classes.textLightPurple)}>Total</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {invoice.items.map((item, index) => (
+                                <TableRow key={index}>
+                                    <TableCell component="th" scope="row" className={classNames(text.font7)}>{ item.name }</TableCell>
+                                    <TableCell align="right" className={classNames(classes.textLightPurple, text.font7)}>{item.quantity}</TableCell>
+                                    <TableCell align="right" className={classNames(classes.textLightPurple, text.font7)}>£ {item.price}</TableCell>
+                                    <TableCell align="right" className={classNames(text.font7)}>£ {item.total}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+            </TableContainer>
+        </Hidden>
+    ), [ bg, classes, invoice, text ]);
+
     const getItems = useCallback(() => {
-        return invoice.items ? invoice.items.map(item => (
-            <div className={classNames(display.flex, display.alignCenter, display.justifyBetween,
-                display.mb1)}>
-                <Typography className={classNames()}>
-                    <spna className={classNames(text.font7)}>{ item.name }</spna><br />
-                    <span className={classNames(classes.textLightPurple, text.font7)}>
-                        { item.quantity } x £ { item.price }
-                    </span>
-                </Typography>
-                <Typography className={classNames(text.font7)}>£ { item.total }</Typography>
-            </div>
-        )) : <></>
-    }, [ classes, display, invoice, text ]);
+        return invoice.items ? <>
+        <Hidden smUp>
+            {
+                invoice.items.map(item => (
+                    <div className={classNames(display.flex, display.alignCenter, display.justifyBetween,
+                        display.mb1)}>
+                        <Typography className={classNames()}>
+                            <spna className={classNames(text.font7)}>{ item.name }</spna><br />
+                            <span className={classNames(classes.textLightPurple, text.font7)}>
+                                { item.quantity } x £ { item.price }
+                            </span>
+                        </Typography>
+                        <Typography className={classNames(text.font7)}>£ { item.total }</Typography>
+                    </div>
+                ))
+            }
+        </Hidden>
+        { getItemsAsTable() }
+        </> : <></>
+    }, [ classes, display, getItemsAsTable, invoice, text ]);
 
     useEffect(() => {
         if(id) {
