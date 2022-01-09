@@ -6,6 +6,7 @@ import { useContext, useRef } from 'react';
 import { ThemeContext } from '../../context/ThemeContext'
 import { AppContext } from '../../context/AppContext'
 import { useTheme } from '../../theme/styles'
+import { useHistory } from 'react-router-dom';
 
 const ReportCard = ({ report }) => {
     const classes = useStyles();
@@ -30,10 +31,15 @@ const ReportCard = ({ report }) => {
             return "not set";
         const date = new Date(report.paymentDue);
         return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-    }
+    };
+
+    const history = useHistory();
+    const clickHandler = () => {
+        history.push(`/invoice/${report.id}`);
+    };
 
     return (
-        <Card className={classNames(theme.componentBg, classes.card)} onClick={displayCreateInvoice(false, report)}>
+        <Card className={classNames(theme.componentBg, classes.card)} onClick={clickHandler}>
             <CardContent className={classNames(classes.cardContent, responsive.smRow)}>
                 <Hidden smUp>
                     <Paper

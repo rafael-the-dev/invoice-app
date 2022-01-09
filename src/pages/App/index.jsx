@@ -13,7 +13,7 @@ const App = () => {
             <AppContextProvider>
                 <BrowserRouter>
                     <Switch>
-                        <Route exact path='/invoice'>{ invoiceMemo }</Route>
+                        <Route exact path='/invoice/:id'>{ invoiceMemo }</Route>
                         <Route path='/'>{ homeMemo }</Route>
                     </Switch>
                 </BrowserRouter>
