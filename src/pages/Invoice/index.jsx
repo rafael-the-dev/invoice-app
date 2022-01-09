@@ -79,6 +79,21 @@ const Invoice = () => {
         return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     };
 
+    const getItems = useCallback(() => {
+        return invoice.items ? invoice.items.map(item => (
+            <div className={classNames(display.flex, display.alignCenter, display.justifyBetween,
+                display.mb1)}>
+                <Typography className={classNames()}>
+                    <spna className={classNames(text.font7)}>{ item.name }</spna><br />
+                    <span className={classNames(classes.textLightPurple, text.font7)}>
+                        { item.quantity } x £ { item.price }
+                    </span>
+                </Typography>
+                <Typography className={classNames(text.font7)}>£ { item.total }</Typography>
+            </div>
+        )) : <></>
+    }, [ classes, display, invoice, text ]);
+
     useEffect(() => {
         if(id) {
             const result = invoicesList.find(item => item.id === id);
@@ -147,26 +162,17 @@ const Invoice = () => {
                         </div>
                         <div className={classNames(display.mt3, classes.checkout, display.pt1, display.pb1, display.pl1,
                             display.pr1)}>
-                            <div className={classNames(display.flex, display.alignCenter, display.justifyBetween,
-                                display.mb1)}>
-                                <Typography className={classNames()}>
-                                    <spna className={classNames(text.font7)}>Banner Design</spna><br />
-                                    <span className={classNames(classes.textLightPurple)}>1 x £ 156.00</span>
-                                </Typography>
-                                <Typography className={classNames(text.font7)}>£ 156.00</Typography>
-                            </div>
-                            <div className={classNames(display.flex, display.alignCenter, display.justifyBetween)}>
-                                <Typography className={classNames()}>
-                                    <spna className={classNames(text.font7)}>Email Design</spna><br />
-                                    <span className={classNames(classes.textLightPurple)}>2 x £ 200.00</span>
-                                </Typography>
-                                <Typography className={classNames(text.font7)}>£ 400.00</Typography>
-                            </div>
+                                {
+                                    getItems()
+                                }
+                            
                         </div>
                         <div className={classNames(display.flex, display.alignCenter, display.justifyBetween, display.pl1,
                             display.pr1, display.pb2, display.pt2, classes.checkoutTotalBanner)}>
                             <Typography className={classNames(text.textLight, display.opacity7)}>Grand Total</Typography>
-                            <Typography variant="h6" className={classNames(text.font7, text.textLight)}>£ 556.00</Typography>
+                            <Typography variant="h6" className={classNames(text.font7, text.textLight)}>
+                                £ { invoice.total }
+                            </Typography>
                         </div>
                     </Paper>
                 </main>
@@ -183,3 +189,14 @@ const Invoice = () => {
 };
 
 export default Invoice;
+
+/**
+ * 
+                            <div className={classNames(display.flex, display.alignCenter, display.justifyBetween)}>
+                                <Typography className={classNames()}>
+                                    <spna className={classNames(text.font7)}>Email Design</spna><br />
+                                    <span className={classNames(classes.textLightPurple)}>2 x £ 200.00</span>
+                                </Typography>
+                                <Typography className={classNames(text.font7)}>£ 400.00</Typography>
+                            </div>
+ */
