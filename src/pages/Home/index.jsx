@@ -11,6 +11,7 @@ import { ThemeContext } from '../../context/ThemeContext'
 import { useTheme } from '../../theme/styles'
 import { AppContext } from '../../context/AppContext';
 import CreateInvoice from '../CreateInvoice';
+import emptyIllustration from '../../assets/images/illustration-empty.svg';
 
 const Home = () => {
     const display = useDisplay();
@@ -42,6 +43,7 @@ const Home = () => {
                 filter.push(...invoicesList.filter(invoice => invoice.status.toLowerCase() === currentValue[0]));
             }
         }, []);
+        return filter;
         if(filter.length > 0)
             return filter;
         else 
@@ -109,7 +111,7 @@ const Home = () => {
                                         label="Pending"
                                     />
                                     <FormControlLabel
-                                        control={<Checkbox checked={paid} onChange={checkboxSelectHandler} name="paid" />}
+                                        control={<Checkbox checked={paid} onChange={checkboxSelectHandler} name="paidd" />}
                                         label="Paid"
                                     />
                                 </FormGroup>
@@ -128,11 +130,28 @@ const Home = () => {
                 <Grid item xs={12} className={classNames(classes.wrapper)}>
                     <Grid container className={classNames(classes.cardsWrapper)}>
                         {
-                            getFilteredInvoices().map((item, index) => (
+                            getFilteredInvoices().length > 0 ? getFilteredInvoices().map((item, index) => (
                                 <Grid item xs={12} key={index} className={classNames(classes.cardContainer)}>
                                     <ReportCard report={item} />
                                 </Grid>
-                            ))
+                            )) : (
+                                <section className={classNames(display.flex, display.flexColumn, display.alignCenter, 
+                                    display.w100, display.mt2)}>
+                                    <div>
+                                        <img 
+                                            src={emptyIllustration} 
+                                            alt='' 
+                                            className={classNames(display.block, display.h100, display.w100)}
+                                        />
+                                    </div>
+                                    <Typography gutterBottom variant="h6" className={classNames(text.font7, display.mt2)}>
+                                        There is nothing here
+                                    </Typography>
+                                    <Typography variant="body2" className={classNames(text.alignCenter)}>
+                                        Create a new invoice by clicking<br/>the New Invoice button and get started
+                                    </Typography>
+                                </section>
+                            )
                         }
                     </Grid>
                 </Grid>
