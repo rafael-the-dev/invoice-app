@@ -1,4 +1,12 @@
 
+.theme-background-color .theme-main-bg .theme-sub-background-color .theme-sub-background-darker-color  {
+    transition: background 2s ease-in-out;
+}
+
+.theme-text {
+    transition: color 2s ease-in-out;
+}
+
 .dark-theme .theme-background-color {
     background-color: #1E2139 !important;
 }
