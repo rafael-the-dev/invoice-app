@@ -43,7 +43,7 @@ const Home = () => {
                 filter.push(...invoicesList.filter(invoice => invoice.status.toLowerCase() === currentValue[0]));
             }
         }, []);
-        return filter;
+
         if(filter.length > 0)
             return filter;
         else 
@@ -111,7 +111,7 @@ const Home = () => {
                                         label="Pending"
                                     />
                                     <FormControlLabel
-                                        control={<Checkbox checked={paid} onChange={checkboxSelectHandler} name="paidd" />}
+                                        control={<Checkbox checked={paid} onChange={checkboxSelectHandler} name="paid" />}
                                         label="Paid"
                                     />
                                 </FormGroup>
