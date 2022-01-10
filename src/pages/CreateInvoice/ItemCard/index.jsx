@@ -67,7 +67,7 @@ const ItemCard = ({ index, setItemList, setProductsList, productsList }) => {
                     placeholder='Item Name'
                     ref={nameRef}
                     onChange={changeHandler('name')}
-                    className={classNames(classes.defaultInput)} 
+                    className={classNames(classes.defaultInput, 'theme-background-color', 'theme-text')} 
                 />
             </div>
             <Grid container className={classNames(display.mt1)}>
@@ -80,7 +80,7 @@ const ItemCard = ({ index, setItemList, setProductsList, productsList }) => {
                             id="quantity-field" 
                             ref={quantityRef}
                             onChange={changeHandler('quantity')}
-                            className={classNames(classes.defaultInput)} 
+                            className={classNames(classes.defaultInput, 'theme-background-color', 'theme-text')} 
                         />
                     </div>
                 </Grid>
@@ -94,7 +94,7 @@ const ItemCard = ({ index, setItemList, setProductsList, productsList }) => {
                             placeholder='Price'
                             ref={priceRef}
                             onChange={changeHandler('price')}
-                            className={classNames(classes.defaultInput)} 
+                            className={classNames(classes.defaultInput, 'theme-background-color', 'theme-text')} 
                         />
                     </div>
                 </Grid>
@@ -110,7 +110,7 @@ const ItemCard = ({ index, setItemList, setProductsList, productsList }) => {
                             ref={totalRef}
                             readOnly
                             className={classNames(classes.defaultInput, display.borderNone, display.outlineNone, 
-                            display.pl0, classes.textPurple)} 
+                            display.pl0, classes.textPurple, classes.defaultInputPrice)} 
                         />
                     </div>
                 </Grid>

@@ -289,10 +289,10 @@ const CreateInvoice = () => {
         <Dialog 
             onClose={closeCreateInvoice} 
             aria-labelledby="dialog-title" 
-            classes={{ root: classes.dialogRoot, scrollPaper: classNames(display.alignStart, responsive.smJustifyStart), paper: classes.dialogPaper}} 
+            classes={{ root: classes.dialogRoot, scrollPaper: classNames(display.alignStart, responsive.smJustifyStart), paper: classNames(classes.dialogPaper, 'theme-main-bg')}} 
             open={openCreateInvoice}>
-            <DialogTitle id="dialog-title" classes={{ root: classNames(classes.dialogTitle, display.mt1)}}>
-                { isCreateNewInvoiceDialog ? 'New Invoice' : <>Edit { getSelectedInvoice().id && <span className={classes.textPurple}>#</span> }{ getSelectedInvoice().id}</> }
+            <DialogTitle id="dialog-title" classes={{ root: classNames(classes.dialogTitle, display.mt1, 'theme-text')}}>
+                { isCreateNewInvoiceDialog ? 'New Invoice' : <>Edit { getSelectedInvoice().id && <span className={classNames(classes.textPurple)}>#</span> }{ getSelectedInvoice().id}</> }
             </DialogTitle>
             <DialogContent className={classNames(display.pl0, display.pr0)}>
                 { Object.keys(errors).length > 0 && <Alert 
@@ -310,7 +310,8 @@ const CreateInvoice = () => {
                             <input 
                                 {...register("street-address", { required: true })}
                                 placeholder='Street Address'
-                                className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['street-address'])})} 
+                                className={classNames(classes.defaultInput, 
+                                {[classes.error]: Boolean(errors['street-address'])}, 'theme-background-color', 'theme-text')} 
                             />
                         </div>
                         <Grid container className={classNames(display.mt1)}>
@@ -322,7 +323,8 @@ const CreateInvoice = () => {
                                     <input 
                                         {...register("city", { required: true })}
                                         placeholder='City'
-                                        className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['city'])})} 
+                                        className={classNames(classes.defaultInput, 
+                                        {[classes.error]: Boolean(errors['city'])}, 'theme-background-color', 'theme-text')} 
                                     />
                                 </div>
                             </Grid>
@@ -334,7 +336,8 @@ const CreateInvoice = () => {
                                     <input 
                                         {...register("post-code", { required: true })}
                                         placeholder='Post Code'
-                                        className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['post-code'])})} 
+                                        className={classNames(classes.defaultInput, 
+                                        'theme-background-color', 'theme-text', {[classes.error]: Boolean(errors['post-code'])})} 
                                     />
                                 </div>
                             </Grid>
@@ -347,7 +350,8 @@ const CreateInvoice = () => {
                                     <input 
                                         {...register("country", { required: true })}
                                         placeholder='Country'
-                                        className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['country'])})} 
+                                        className={classNames(classes.defaultInput, 
+                                        'theme-background-color', 'theme-text', {[classes.error]: Boolean(errors['country'])})} 
                                     />
                                 </div>
                             </Grid>
@@ -363,7 +367,8 @@ const CreateInvoice = () => {
                             <input 
                                 {...register("client-name", { required: true })}
                                 placeholder="Client's Name"
-                                className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['client-name'])})} 
+                                className={classNames(classes.defaultInput, 
+                                'theme-background-color', 'theme-text', {[classes.error]: Boolean(errors['client-name'])})} 
                             />
                         </div>
                         <div className={classNames(display.flex, display.flexColumn, display.mt1)}>
@@ -374,7 +379,8 @@ const CreateInvoice = () => {
                                 {...register("client-email", { required: true })}
                                 type="email"
                                 placeholder="e.g. email@example.com"
-                                className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['client-email'])})} 
+                                className={classNames(classes.defaultInput, 
+                                'theme-background-color', 'theme-text', {[classes.error]: Boolean(errors['client-email'])})} 
                             />
                         </div>
                         <div className={classNames(display.flex, display.flexColumn, display.mt1)}>
@@ -384,7 +390,8 @@ const CreateInvoice = () => {
                             <input 
                                 {...register("client-street-address", { required: true })}
                                 placeholder="Street Address"
-                                className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['client-street-address'])})} 
+                                className={classNames(classes.defaultInput, 
+                                'theme-background-color', 'theme-text', {[classes.error]: Boolean(errors['client-street-address'])})} 
                             />
                         </div>
                         <Grid container className={classNames(display.mt1)}>
@@ -396,7 +403,8 @@ const CreateInvoice = () => {
                                     <input 
                                         {...register("client-city", { required: true })}
                                         placeholder='City'
-                                        className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['client-city'])})} 
+                                        className={classNames(classes.defaultInput, 
+                                        'theme-background-color', 'theme-text', {[classes.error]: Boolean(errors['client-city'])})} 
                                     />
                                 </div>
                             </Grid>
@@ -408,7 +416,8 @@ const CreateInvoice = () => {
                                     <input 
                                         {...register("client-post-code", { required: true })}
                                         placeholder='Post Code'
-                                        className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['client-post-code'])})} 
+                                        className={classNames(classes.defaultInput, 
+                                        'theme-background-color', 'theme-text', {[classes.error]: Boolean(errors['client-post-code'])})} 
                                     />
                                 </div>
                             </Grid>
@@ -421,7 +430,8 @@ const CreateInvoice = () => {
                                     <input 
                                         {...register("client-country", { required: true })}
                                         placeholder='Country'
-                                        className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['client-country'])})} 
+                                        className={classNames(classes.defaultInput, 
+                                        'theme-background-color', 'theme-text', {[classes.error]: Boolean(errors['client-country'])})} 
                                     />
                                 </div>
                             </Grid>
@@ -437,7 +447,8 @@ const CreateInvoice = () => {
                                     {...register("invoice-date", { required: true })}
                                     type="date"
                                     placeholder='date'
-                                    className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['invoice-date'])})} 
+                                    className={classNames(classes.defaultInput, 
+                                    'theme-background-color', 'theme-text', {[classes.error]: Boolean(errors['invoice-date'])})} 
                                 />
                             </div>
                         </Grid>
@@ -458,8 +469,9 @@ const CreateInvoice = () => {
                                     onChange={handleChange}
                                     variant="outlined"
                                     helperText=""
-                                    classes={{ root: classes.paymnetTermRoot}}
-                                    className={classNames(classes.paymnetTerm, classes.countryContainer, {[classes.error]: Boolean(errors['payment-term'])})}
+                                    classes={{ root: classNames(classes.paymnetTermRoot, 'theme-text')}}
+                                    className={classNames(classes.paymnetTerm, classes.countryContainer, 
+                                    'theme-background-color', 'theme-text', {[classes.error]: Boolean(errors['payment-term'])})}
                                     >
                                     {
                                         paymentsTerms.map((option) => (
@@ -480,7 +492,8 @@ const CreateInvoice = () => {
                                     {...register("project-description", { required: true })}
                                     rows="1"
                                     placeholder='e.g. Graphic Design Service'
-                                    className={classNames(classes.defaultInput, {[classes.error]: Boolean(errors['project-description'])})} 
+                                    className={classNames(classes.defaultInput, 
+                                    'theme-background-color', 'theme-text', {[classes.error]: Boolean(errors['project-description'])})} 
                                 ></textarea>
                             </div>
                         </Grid>
@@ -497,13 +510,13 @@ const CreateInvoice = () => {
                             </div> 
                         }
                         <Button onClick={addItemClickHandler} className={classNames(classes.buttonPill, classes.editButton, display.mt2, 
-                            display.w100, text.font7)}>
+                            display.w100, text.font7, 'theme-background-color')}>
                             + Add New Item
                         </Button>
                     </fieldset>
                     <div className={classNames(display.mt1, classes.gradientContainer)}></div>
                     { isCreateNewInvoiceDialog ? (
-                        <Paper elevation={0} className={classNames(display.pt1, classes.px, display.pb1, display.flex, display.alignCenter, display.justifyEnd)}>
+                        <Paper elevation={0} className={classNames(display.pt1, classes.px, display.pb1, display.flex, display.alignCenter, display.justifyEnd, 'theme-background-color')}>
                             <Button className={classNames(classes.buttonPill, text.rem7, text.font7, classes.editButton)}>Edit</Button>
                             <Button 
                                 className={classNames(classes.buttonPill, text.rem7, display.ml1, text.font7, 
@@ -518,7 +531,7 @@ const CreateInvoice = () => {
                             </Button>
                         </Paper>
                     ) : (
-                        <Paper elevation={0} className={classNames(display.pt1, classes.px, display.pb1, display.flex, display.alignCenter, display.justifyEnd)}>
+                        <Paper elevation={0} className={classNames(display.pt1, classes.px, display.pb1, display.flex, display.alignCenter, display.justifyEnd, 'theme-background-color')}>
                             <Button 
                                 className={classNames(classes.buttonPill, text.rem8, text.font7, classes.editButton)}
                                 onClick={editClickHandler}>Edit</Button>
