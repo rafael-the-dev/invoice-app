@@ -63,7 +63,7 @@ const ReportCard = ({ report }) => {
                                 £{ report.total }
                             </Typography>
                         </Paper>
-                        <Button className={classNames(buttons.current[report.status.toLowerCase()], classes.button)}>
+                        <Button variant='contained' className={classNames(buttons.current[report.status.toLowerCase()], classes.button)}>
                             { report.status }
                         </Button>
                     </Paper>

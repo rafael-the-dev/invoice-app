@@ -17,7 +17,10 @@ export const useStyles = makeStyles(theme => ({
         }
     },
     textLightPurple: {
-        color: '#858BB2'
+        color: '#858BB2',
+        '.dark-theme &': {
+            color: '#DFE3FA !important'
+        }
     },
     statusContainer: {
         width: '100%',

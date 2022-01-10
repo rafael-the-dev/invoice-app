@@ -15,21 +15,28 @@ export const useStyles = makeStyles(theme => ({
     },
     cardPrice: {},
     lightGareyText: {
-        color: '#858BB2'
+        color: '#858BB2',
+        '.dark-theme &': {
+            color: '#DFE3FA !important'
+        }
     },
     button: {
         //opacity: .8
     },
     cardPaidButton: {
-        //backgroundColor: '#33D69F',
+        backgroundColor: '#33d69f1a',
         color: '#33D69F',
     },
     cardPendingButton: {
-        //backgroundColor: '#FF8F00',
-        color: '#FF8F00'
+        backgroundColor: '#ff8f0021',
+        color: '#FF8F00',
     },
     cardDraftButton: {
-        //backgroundColor: '##DFE3FA',
-        color: '#373B53'
+        backgroundColor: '#dfe3fa87',
+        color: '#373B53',
+        '.dark-theme &': {
+            backgroundColor: '#dfe1ef30',
+            color: '#DFE3FA !important'
+        }
     }
 }));

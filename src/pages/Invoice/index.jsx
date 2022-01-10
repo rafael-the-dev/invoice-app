@@ -101,10 +101,10 @@ const Invoice = () => {
                         <TableBody>
                             {invoice.items.map((item, index) => (
                                 <TableRow key={index}>
-                                    <TableCell component="th" scope="row" className={classNames(text.font7, display.borderNone)}>{ item.name }</TableCell>
+                                    <TableCell component="th" scope="row" className={classNames(text.font7, display.borderNone, 'theme-text')}>{ item.name }</TableCell>
                                     <TableCell align="right" className={classNames(classes.textLightPurple, text.font7, display.borderNone)}>{item.quantity}</TableCell>
                                     <TableCell align="right" className={classNames(classes.textLightPurple, text.font7, display.borderNone)}>£ {item.price}</TableCell>
-                                    <TableCell align="right" className={classNames(text.font7, display.borderNone)}>£ {item.total}</TableCell>
+                                    <TableCell align="right" className={classNames(text.font7, display.borderNone, 'theme-text')}>£ {item.total}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -179,10 +179,10 @@ const Invoice = () => {
                                 <span className={classNames(classes.textLightPurple)}>{ invoice.description }</span>
                             </Typography>
                             <Typography className={classNames(classes.textLightPurple, text.alignLeft)}>
-                                <span className={classNames(display.block, text.alignRight)}>{ invoice.senderAddress?.street}</span>
-                                <span className={classNames(display.block, text.alignRight)}>{ invoice.senderAddress?.city}</span>
-                                <span className={classNames(display.block, text.alignRight)}>{ invoice.senderAddress?.postCode}</span>
-                                <span className={classNames(display.block, text.alignRight)}>{ invoice.senderAddress?.country}</span>
+                                <span className={classNames(display.block, text.alignLeft, text.smAlignRight)}>{ invoice.senderAddress?.street}</span>
+                                <span className={classNames(display.block, text.alignLeft, text.smAlignRight)}>{ invoice.senderAddress?.city}</span>
+                                <span className={classNames(display.block, text.alignLeft, text.smAlignRight)}>{ invoice.senderAddress?.postCode}</span>
+                                <span className={classNames(display.block, text.alignLeft, text.smAlignRight)}>{ invoice.senderAddress?.country}</span>
                             </Typography>
                         </div>
                         <div className={classNames(display.flex, display.flexColumn, display.mt3, responsive.smMt2,

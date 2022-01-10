@@ -70,10 +70,10 @@ const Home = () => {
                 className={classNames(classes.main, responsive.mdAlignStart, 'theme-main-bg')}>
                 <Grid item container alignItems="center" component="section" xs={12}>
                     <Grid item component={Paper} elevation={0} xs={3} sm={4} md={4} className={classNames(bg.transparent)}>
-                        <Typography component="h1" variant="h6" className={classNames(text.font7, themeStyles.darkWhiteText)}>
+                        <Typography component="h1" variant="h6" className={classNames(text.font7, 'theme-text')}>
                             Invoices
                         </Typography>
-                        <Typography component="p" variant="body2" className={classNames(display.opacity8, themeStyles.darkWhiteText)}>
+                        <Typography component="p" variant="body2" className={classNames(display.opacity8, 'theme-text')}>
                             <Hidden xsDown>There are</Hidden> 7 <Hidden only="xs">total</Hidden> invoices
                         </Typography>
                     </Grid>
@@ -83,7 +83,7 @@ const Home = () => {
                             <Button 
                                 aria-describedby={popoverId}
                                 aria-haspopup="true" 
-                                className={classNames(themeStyles.darkWhiteText)}
+                                className={classNames('theme-text')}
                                 onClick={handleClick}>
                                 Filter<Hidden xsDown> by status</Hidden>
                             </Button>
