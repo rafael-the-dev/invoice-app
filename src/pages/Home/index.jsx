@@ -67,7 +67,7 @@ const Home = () => {
         <div className={classNames(classes.baseContainer, display.flex, display.flexColumn, responsive.mdRow)}>
             <Header />
             <Grid container component="main" 
-                className={classNames(classes.main, responsive.mdAlignStart, themeStyles.mainBg)}>
+                className={classNames(classes.main, responsive.mdAlignStart, 'theme-main-bg')}>
                 <Grid item container alignItems="center" component="section" xs={12}>
                     <Grid item component={Paper} elevation={0} xs={3} sm={4} md={4} className={classNames(bg.transparent)}>
                         <Typography component="h1" variant="h6" className={classNames(text.font7, themeStyles.darkWhiteText)}>

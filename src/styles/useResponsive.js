@@ -36,11 +36,6 @@ export const useResponsive = makeStyles(theme => ({
             flexDirection: 'column !important'
         }
     },
-    mdRow: {
-        [theme.breakpoints.up('md')]: {
-            flexDirection: 'row !important'
-        }
-    },
     smJustifyEnd: {
         [theme.breakpoints.up('sm')]: {
             justifyContent: 'flex-end !important'

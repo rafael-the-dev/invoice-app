@@ -4,7 +4,7 @@ import { useBackground, useDisplay, useTypography, useResponsive } from '../../s
 import classNames from 'classnames';
 import { useContext, useRef } from 'react';
 import { ThemeContext } from '../../context/ThemeContext'
-import { AppContext } from '../../context/AppContext'
+//import { AppContext } from '../../context/AppContext'
 import { useTheme } from '../../theme/styles'
 import { useHistory } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ const ReportCard = ({ report }) => {
     const bg = useBackground();
    // const status = report.status.toLowerCase();
 
-    const { displayCreateInvoice } = useContext(AppContext);
+    //const { displayCreateInvoice } = useContext(AppContext);
     const { theme } = useContext(ThemeContext);
     const themeStyles = useTheme(theme);
 
@@ -39,13 +39,13 @@ const ReportCard = ({ report }) => {
     };
 
     return (
-        <Card className={classNames(theme.componentBg, classes.card)} onClick={clickHandler}>
+        <Card className={classNames('theme-background-color', classes.card)} onClick={clickHandler}>
             <CardContent className={classNames(classes.cardContent, responsive.smRow)}>
                 <Hidden smUp>
                     <Paper
                         elevation={0} 
                         className={classNames(display.flex, display.alignCenter, display.justifyBetween, bg.transparent)}>
-                        <Typography component="h2" variant="body2" className={classNames(text.font7)}>
+                        <Typography component="h2" variant="body2" className={classNames(text.font7, 'theme-text')}>
                             <span className={classNames(classes.lightGareyText)}>#</span>{ report.id }
                         </Typography>
                         <Hidden smUp>
@@ -59,7 +59,7 @@ const ReportCard = ({ report }) => {
                             <Typography  component="p" variant="body2" className={classNames(classes.lightGareyText)}>
                                 { getDate() }
                             </Typography>
-                            <Typography  component="p" variant="h6" className={classNames(text.font7, classes.cardPrice)}>
+                            <Typography  component="p" variant="h6" className={classNames('theme-text', text.font7, classes.cardPrice)}>
                                 £{ report.total }
                             </Typography>
                         </Paper>
@@ -73,7 +73,7 @@ const ReportCard = ({ report }) => {
                         display.w100)}>
                         <Typography component="h2" variant="body2" className={classNames(text.font7)}>
                             <span className={classNames(classes.lightGareyText)}>#</span>
-                            <span className={classNames(themeStyles.darkWhiteText)}>{ report.id }</span>
+                            <span className={classNames('theme-text')}>{ report.id }</span>
                         </Typography>
                         <Typography  component="p" variant="body2" className={classNames(classes.lightGareyText)}>
                             Due { getDate() }
@@ -81,7 +81,7 @@ const ReportCard = ({ report }) => {
                         <Typography component="p" variant="body2" className={classNames(classes.lightGareyText)}>
                             { report.clientName }
                         </Typography>
-                        <Typography  component="p" variant="h6" className={classNames(text.font7, classes.cardPrice, themeStyles.darkWhiteText)}>
+                        <Typography  component="p" variant="h6" className={classNames(text.font7, classes.cardPrice, 'theme-text')}>
                             £{ report.total }
                         </Typography>
                         <Button className={classNames(buttons.current[report.status.toLowerCase()], classes.button)}>
