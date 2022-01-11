@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import { colors } from '../styles/colors'
 
-const { dark1, dark2, darkBlue, grey, light, lightBg } = colors;
+const { dark1, dark2, darkBlue, light, lightBg } = colors;
 
 export const useTheme = makeStyles(theme => ({
     componentBg: {

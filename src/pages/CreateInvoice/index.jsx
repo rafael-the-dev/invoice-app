@@ -21,7 +21,7 @@ const CreateInvoice = () => {
     const text = useTypography();
 
     const { closeCreateInvoice, getSelectedInvoice, isCreateNewInvoiceDialog, 
-        openCreateInvoice, setInvoiceList, setSelectedInvoice } = useContext(AppContext);
+        openCreateInvoice, setInvoiceList, setOpenDeleteDialog, setSelectedInvoice } = useContext(AppContext);
     const [paymentTerm, setPaymentTerm] = useState('Net 30 Day');
     const [ itemsList, setItemList ] = useState([ ]);
     const [ productsList, setProductsList ] = useState({});
@@ -275,7 +275,7 @@ const CreateInvoice = () => {
 
     }, [ getEditedInvoice, getSelectedInvoice, reset, setInvoiceList, setSelectedInvoice ]);
 
-    const deleteClickHandler = useCallback(() => {
+    /*const deleteClickHandler = useCallback(() => {
         setInvoiceList(oldList => {
             const list = [ ...oldList ];
             const result = list.filter(item => item.id !== getSelectedInvoice().id);
@@ -283,7 +283,7 @@ const CreateInvoice = () => {
             setSelectedInvoice({ ...getEditedInvoice(), id: ''})
             return result;
         }, []);
-    }, [ getEditedInvoice, getSelectedInvoice, reset, setInvoiceList, setSelectedInvoice ]);
+    }, [ getEditedInvoice, getSelectedInvoice, reset, setInvoiceList, setSelectedInvoice ]);*/
 
     return (
         <Dialog 
@@ -538,7 +538,7 @@ const CreateInvoice = () => {
                             <Button 
                                 className={classNames(classes.buttonPill, text.rem8, responsive.smMl1, text.font7, 
                                 text.textLight, classes.saveButton)}
-                                onClick={deleteClickHandler}>
+                                onClick={() => setOpenDeleteDialog(true)}>
                                 Delete
                             </Button>
                         </Paper>

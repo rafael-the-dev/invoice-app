@@ -2,10 +2,10 @@ import { Button, Card, CardContent, Hidden, Paper, Typography } from '@material-
 import { useStyles } from './styles';
 import { useBackground, useDisplay, useTypography, useResponsive } from '../../styles';
 import classNames from 'classnames';
-import { useContext, useRef } from 'react';
-import { ThemeContext } from '../../context/ThemeContext'
+import { useRef } from 'react';
+//import { ThemeContext } from '../../context/ThemeContext'
 //import { AppContext } from '../../context/AppContext'
-import { useTheme } from '../../theme/styles'
+//import { useTheme } from '../../theme/styles'
 import { useHistory } from 'react-router-dom';
 
 const ReportCard = ({ report }) => {
@@ -17,8 +17,7 @@ const ReportCard = ({ report }) => {
    // const status = report.status.toLowerCase();
 
     //const { displayCreateInvoice } = useContext(AppContext);
-    const { theme } = useContext(ThemeContext);
-    const themeStyles = useTheme(theme);
+    //const { theme } = useContext(ThemeContext);
 
     const buttons = useRef({
         paid: classes.cardPaidButton,
