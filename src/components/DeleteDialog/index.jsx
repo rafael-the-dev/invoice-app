@@ -23,10 +23,10 @@ const DeleteDialog = () => {
     }, [ getInvoiceToBeDeleted, history, setInvoiceList, setOpenDeleteDialog ]);
 
     return (
-        <Dialog onClose={handleCloseDeleteDialog} aria-labelledby="simple-dialog-title" open={openDeleteDialog}>
-            <DialogTitle id="simple-dialog-title">Confirm Deletion</DialogTitle>
+        <Dialog onClose={handleCloseDeleteDialog} aria-labelledby="simple-dialog-title" open={openDeleteDialog} classes={{ paper: classNames('theme-background-color') }}>
+            <DialogTitle id="simple-dialog-title" className={classNames('theme-text')}>Confirm Deletion</DialogTitle>
             <DialogContent>
-                <DialogContentText id="alert-dialog-slide-description">
+                <DialogContentText id="alert-dialog-slide-description" className={classNames('theme-text')}>
                     Are you sure you want to delete invoice #{ getInvoiceToBeDeleted().id }? This action cannot be undone.
                 </DialogContentText>
             </DialogContent>
