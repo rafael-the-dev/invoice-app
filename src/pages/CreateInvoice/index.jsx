@@ -21,7 +21,7 @@ const CreateInvoice = () => {
     const text = useTypography();
 
     const { closeCreateInvoice, getSelectedInvoice, isCreateNewInvoiceDialog, 
-        openCreateInvoice, setInvoiceList, setOpenDeleteDialog, setSelectedInvoice } = useContext(AppContext);
+        openCreateInvoice, setInvoiceList, setSelectedInvoice } = useContext(AppContext);
     const [paymentTerm, setPaymentTerm] = useState('Net 30 Day');
     const [ itemsList, setItemList ] = useState([ ]);
     const [ productsList, setProductsList ] = useState({});
