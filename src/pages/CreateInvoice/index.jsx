@@ -506,7 +506,9 @@ const CreateInvoice = () => {
                     <div className={classNames(display.mt1, classes.gradientContainer)}></div>
                     { isCreateNewInvoiceDialog ? (
                         <Paper elevation={0} className={classNames(display.pt1, classes.px, display.pb1, display.flex, display.alignCenter, display.justifyEnd, 'theme-background-color')}>
-                            <Button className={classNames(classes.buttonPill, text.rem7, text.font7, classes.editButton)}>Edit</Button>
+                            <Button 
+                                onClick={closeCreateInvoice}
+                                className={classNames(classes.buttonPill, text.rem7, text.font7, classes.editButton)}>Discard</Button>
                             <Button 
                                 className={classNames(classes.buttonPill, text.rem7, display.ml1, text.font7, 
                                     text.textLight, classes.saveAsDraft)}
