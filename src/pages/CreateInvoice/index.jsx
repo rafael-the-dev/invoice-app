@@ -46,15 +46,7 @@ const CreateInvoice = () => {
             generateNewProduct.current = false;
         }
     }, [ itemsList ]);
-    /*useEffect(() => {
-        const index = nextId();
-        setProductsList(list => {
-            return { ...list, [index]: { name: '', quantity: 0, price: 0, total: 0}};
-        });
-        setItemList(list => [
-            <ItemCard index={index} setItemList={setItemList} setProductsList={setProductsList} productsList={productsList} />
-        ])
-    }, [])*/
+
     const paymentsTerms = [
         {
           value: 1,
@@ -177,6 +169,12 @@ const CreateInvoice = () => {
     };
 
     const canIGenerateItems = useRef(false);
+
+    useEffect(() => {
+        canIGenerateItems.current = false;
+        generateNewProduct.current = false;
+    }, []);
+
     useEffect(() => {
         const selectedInvoice = getSelectedInvoice();
         if(!isCreateNewInvoiceDialog && Boolean(selectedInvoice)) {
@@ -207,6 +205,7 @@ const CreateInvoice = () => {
             });
             nextProductID.current = index;
             canIGenerateItems.current = true;
+            generateNewProduct.current = true;
             setProductsList(list);
         }
             
@@ -259,7 +258,7 @@ const CreateInvoice = () => {
         setInvoiceList(list => [...list, newItem]);
         reset();
         generateInvoiceID();
-    }, [ generateInvoiceID, getEditedInvoice, reset, setInvoiceList ])
+    }, [ generateInvoiceID, getEditedInvoice, reset, setInvoiceList ]);
 
     const editClickHandler = useCallback(() => {
         setInvoiceList(oldList => {
@@ -274,16 +273,6 @@ const CreateInvoice = () => {
         }, []);
 
     }, [ getEditedInvoice, getSelectedInvoice, reset, setInvoiceList, setSelectedInvoice ]);
-
-    /*const deleteClickHandler = useCallback(() => {
-        setInvoiceList(oldList => {
-            const list = [ ...oldList ];
-            const result = list.filter(item => item.id !== getSelectedInvoice().id);
-            reset();
-            setSelectedInvoice({ ...getEditedInvoice(), id: ''})
-            return result;
-        }, []);
-    }, [ getEditedInvoice, getSelectedInvoice, reset, setInvoiceList, setSelectedInvoice ]);*/
 
     return (
         <Dialog 
@@ -534,12 +523,12 @@ const CreateInvoice = () => {
                         <Paper elevation={0} className={classNames(display.pt1, classes.px, display.pb1, display.flex, display.alignCenter, display.justifyEnd, 'theme-background-color')}>
                             <Button 
                                 className={classNames(classes.buttonPill, text.rem8, text.font7, classes.editButton)}
-                                onClick={editClickHandler}>Edit</Button>
+                                onClick={closeCreateInvoice}>Cancel</Button>
                             <Button 
                                 className={classNames(classes.buttonPill, text.rem8, responsive.smMl1, text.font7, 
                                 text.textLight, classes.saveButton)}
-                                onClick={() => setOpenDeleteDialog(true)}>
-                                Delete
+                                onClick={editClickHandler}>
+                                Save Changes
                             </Button>
                         </Paper>
                     ) }
