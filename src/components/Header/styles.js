@@ -14,7 +14,7 @@ export const useClasses = makeStyles(theme => ({
     },
     
     headerLogoContainer: {
-        backgroundColor: '#7C5DFA',
+        backgroundColor: '#7C5DFA !important',
         borderRadius: '0 20px 20px 0',
         height: 70,
         position: 'relative',
