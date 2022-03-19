@@ -11,6 +11,8 @@ import { useState } from 'react';
 import { useCallback } from 'react';
 import CreateInvoice from '../CreateInvoice';
 import { useRef } from 'react';
+import { useSelector } from 'react-redux'
+import { getAllInvoices } from '../../redux/selectors';
 
 const Invoice = () => {
     const display = useDisplay();
@@ -19,7 +21,9 @@ const Invoice = () => {
     const responsive = useResponsive();
     const text = useTypography();
 
-    const { displayCreateInvoice, invoicesList, openCreateInvoice, setInvoiceList, setOpenDeleteDialog, setInvoiceToBeDeleted } = useContext(AppContext);
+    const invoicesList = useSelector(getAllInvoices);
+
+    const { displayCreateInvoice, openCreateInvoice, setInvoiceList, setOpenDeleteDialog, setInvoiceToBeDeleted } = useContext(AppContext);
     const [ invoice, setInvoice ] = useState({});
     const history = useHistory();
     const { id } = useParams();
