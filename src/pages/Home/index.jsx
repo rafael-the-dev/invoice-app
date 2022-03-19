@@ -12,6 +12,8 @@ import { useTheme } from '../../theme/styles'
 import { AppContext } from '../../context/AppContext';
 import CreateInvoice from '../CreateInvoice';
 import emptyIllustration from '../../assets/images/illustration-empty.svg';
+import { useSelector } from 'react-redux'
+import { getAllInvoices } from '../../redux/selectors';
 
 const Home = () => {
     const display = useDisplay();
@@ -20,7 +22,9 @@ const Home = () => {
     const responsive = useResponsive();
     const text = useTypography();
 
-    const { displayCreateInvoice, invoicesList, openCreateInvoice } = useContext(AppContext);
+    const invoicesList = useSelector(getAllInvoices);
+
+    const { displayCreateInvoice, openCreateInvoice } = useContext(AppContext);
 
     const { theme } = useContext(ThemeContext);
     const themeStyles = useTheme(theme);
