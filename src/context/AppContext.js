@@ -1,10 +1,16 @@
 import { createContext, useCallback, useEffect, useRef, useState } from 'react';
 import data from '../data.json';
+import { useDispatch, useSelector } from 'react-redux'
+import { addAllInvoices } from '../redux/actions';
+import { getAllInvoices } from '../redux/selectors';
 
 export const AppContext = createContext();
 AppContext.displayName = 'AppContext';
 
 export const AppContextProvider = ({ children }) => {
+    const dispatch = useDispatch();
+    const reduxInvoices = useSelector(getAllInvoices);
+
     const [ openCreateInvoice, setOpenCreateInvoice ] = useState(false);
     const [ isCreateNewInvoiceDialog, setIsCreateNewInvoiceDialog ] = useState(false);
     const [ openDeleteDialog, setOpenDeleteDialog ] = useState(false);
@@ -31,18 +37,20 @@ export const AppContextProvider = ({ children }) => {
     useEffect(() => {
         if(!Boolean(localStorage.getItem(localStoraInvoicesName.current))) {
             //localStorage.setItem(localStoraInvoicesName.current, JSON.stringify([...data]));
-            setInvoiceList([ ...data, ])
+            setInvoiceList([ ...data, ]);
+            dispatch(addAllInvoices([ ...data, ]));
         } else {
             const list = [ ...JSON.parse(localStorage.getItem(localStoraInvoicesName.current))];
-            setInvoiceList(list)
+            setInvoiceList(list);
+            dispatch(addAllInvoices(list));
             //localStorage.setItem(localStoraInvoicesName.current, JSON.stringify(list));
         }
-    }, []);
+    }, [ dispatch ]);
 
     useEffect(() => {
-        if(invoicesList.length > 0)
-        localStorage.setItem(localStoraInvoicesName.current, JSON.stringify(invoicesList));
-    }, [ invoicesList ])
+        if(reduxInvoices.length > 0)
+            localStorage.setItem(localStoraInvoicesName.current, JSON.stringify(reduxInvoices));
+    }, [ reduxInvoices ])
 
     return (
         <AppContext.Provider value={{ closeCreateInvoice, displayCreateInvoice, getSelectedInvoice, 

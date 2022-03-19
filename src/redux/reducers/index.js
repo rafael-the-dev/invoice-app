@@ -1,5 +1,13 @@
+import { addAllInvoices } from '../actions';
 import { initialState } from '../state'
 
 export const reducer = (state=initialState, action) => {
-    return state;
+    switch(action.type) {
+        case addAllInvoices().type: {
+            return { ...state, invoices: action.payload }
+        }
+        default: {
+            return state;
+        }
+    }
 }
