@@ -1,12 +1,16 @@
-import { createContext, useCallback, useEffect, useState } from 'react';
+import { createContext, useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
+import { changeTheme, toggleStateTheme } from '../redux/actions';
+import { getTheme } from '../redux/selectors';
 
 export const ThemeContext = createContext();
 ThemeContext.displayName = 'ThemeContext';
 
 export const ThemeContextProvider = ({ children }) => {
-    const [ theme, setTheme ] = useState({ isLightTheme: true });
+    const dispatch = useDispatch();
+    const theme = useSelector(getTheme)
 
-    const toggleTheme = useCallback(() => setTheme(theme => ({ ...theme, isLightTheme: !theme.isLightTheme})), []);
+    const toggleTheme = useCallback(() => dispatch(toggleStateTheme()), [ dispatch ]);
 
 
     useEffect(() => {
@@ -19,9 +23,9 @@ export const ThemeContextProvider = ({ children }) => {
         const stringifiedTheme = localStorage.getItem('invoice-app__isLightTheme');
         if(stringifiedTheme) {
             const storedTheme = JSON.parse(stringifiedTheme);
-            setTheme({ isLightTheme: storedTheme});
+            dispatch(changeTheme({ isLightTheme: storedTheme }))
         }
-    }, []);
+    }, [ dispatch ]);
 
     useEffect(() => {
         if(theme.isLightTheme) {
