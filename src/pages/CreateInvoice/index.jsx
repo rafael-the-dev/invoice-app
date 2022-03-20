@@ -12,13 +12,16 @@ import ItemCard from './ItemCard';
 import nextId from "react-id-generator";
 import { useForm } from "react-hook-form";
 import moment from 'moment';
+import { useDispatch } from 'react-redux'
+import { addInvoice } from '../../redux/actions';
 
 const CreateInvoice = () => {
     const display = useDisplay();
     const classes = useStyles();
-    //const bg = useBackground();
     const responsive = useResponsive();
     const text = useTypography();
+
+    const dispatch = useDispatch();
 
     const { closeCreateInvoice, getSelectedInvoice, isCreateNewInvoiceDialog, 
         openCreateInvoice, setInvoiceList, setSelectedInvoice } = useContext(AppContext);
@@ -153,7 +156,9 @@ const CreateInvoice = () => {
     const onSubmit = data => {
         if(getTotalPrice() > 0) {
             const newItem = createInvoice(data)
-            setInvoiceList(list => [...list, newItem]);
+            dispatch(addInvoice({
+                invoice: newItem
+            }));
             reset();
             generateInvoiceID()
         }
