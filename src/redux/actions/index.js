@@ -9,6 +9,12 @@ export const addAllInvoices = payload => ({
     type: 'ADD_ALL_INVOICES'
 });
 
+
+export const deleteInvoice = payload => ({
+    payload,
+    type: 'DELETE_INVOICE'
+});
+
 export const changeTheme = payload => ({
     payload,
     type: 'CHANGE_THEME'

@@ -1,8 +1,13 @@
-import { addAllInvoices, changeTheme, toggleStateTheme } from '../actions';
+import { addAllInvoices, changeTheme, deleteInvoice, toggleStateTheme } from '../actions';
 import { initialState } from '../state';
 
 const changeThemeFunc = (state, payload) => {
     return { ...state, theme: payload}
+};
+
+const deleteInvoiceFunc = (state, payload) => {
+    const invoices = [ ...state.invoices.filter(item => item.id !== payload.id) ];
+    return { ...state, invoices };
 }
 
 const toggleThemeFunc = (state) => {
@@ -16,6 +21,9 @@ export const reducer = (state=initialState, action) => {
         }
         case changeTheme().type: {
             return changeThemeFunc(state, action.payload);
+        }
+        case deleteInvoice().type: {
+            return deleteInvoiceFunc(state, action.payload);
         }
         case toggleStateTheme().type: {
             return toggleThemeFunc(state);

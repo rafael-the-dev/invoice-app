@@ -5,22 +5,32 @@ import classNames from 'classnames';
 import { useTypography } from '../../styles';
 import { useStyles } from './styles';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
+import { deleteInvoice } from '../../redux/actions';
 
 const DeleteDialog = () => {
     const classes = useStyles();
     const text = useTypography();
-    const { handleCloseDeleteDialog, getInvoiceToBeDeleted, openDeleteDialog, setInvoiceList, setOpenDeleteDialog } = useContext(AppContext);
+
+    const dispatch = useDispatch();
+
+    const { handleCloseDeleteDialog, getInvoiceToBeDeleted, openDeleteDialog, setOpenDeleteDialog } = useContext(AppContext);
 
     const history = useHistory();
     const deleteClickHandler = useCallback(() => {
-        setInvoiceList(oldList => {
+        dispatch(deleteInvoice({
+            id: getInvoiceToBeDeleted().id
+        }));
+
+        setOpenDeleteDialog(false);
+        history.push('/');
+
+        /*setInvoiceList(oldList => {
             const list = [ ...oldList ];
             const result = list.filter(item => item.id !== getInvoiceToBeDeleted().id);
             return result;
-        }, []);
-        setOpenDeleteDialog(false);
-        history.push('/');
-    }, [ getInvoiceToBeDeleted, history, setInvoiceList, setOpenDeleteDialog ]);
+        }, []);*/
+    }, [ dispatch, getInvoiceToBeDeleted, history, setOpenDeleteDialog ]);
 
     return (
         <Dialog onClose={handleCloseDeleteDialog} aria-labelledby="simple-dialog-title" open={openDeleteDialog} classes={{ paper: classNames('theme-background-color') }}>
