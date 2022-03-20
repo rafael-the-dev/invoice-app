@@ -13,7 +13,7 @@ import nextId from "react-id-generator";
 import { useForm } from "react-hook-form";
 import moment from 'moment';
 import { useDispatch } from 'react-redux'
-import { addInvoice } from '../../redux/actions';
+import { addInvoice, editInvoice } from '../../redux/actions';
 
 const CreateInvoice = () => {
     const display = useDisplay();
@@ -86,8 +86,6 @@ const CreateInvoice = () => {
     }, [ productsList ])
 
     const addItemClickHandler = () => {
-        //const index = nextId();
-        //setProductsList(list => ({ ...list, [index]: { name: '', quantity: 0, price: 0, total: 0}}));
         setItemList(list => [ ...list,  nextItemCard() ]);
         generateNewProduct.current = true;
         setHasItemsError(false);
@@ -266,18 +264,12 @@ const CreateInvoice = () => {
     }, [ generateInvoiceID, getEditedInvoice, reset, setInvoiceList ]);
 
     const editClickHandler = useCallback(() => {
-        setInvoiceList(oldList => {
-            const list = [ ...oldList ];
-            const result = list.findIndex(item => item.id === getSelectedInvoice().id);
-            if(result !== -1) {
-                list[result] = getEditedInvoice({});
-                reset();
-                setSelectedInvoice({ ...getEditedInvoice({}), id: ''})
-            }
-            return list;
-        }, []);
-
-    }, [ getEditedInvoice, getSelectedInvoice, reset, setInvoiceList, setSelectedInvoice ]);
+        dispatch(editInvoice({
+            id: getSelectedInvoice().id,
+            invoice: getEditedInvoice({}),
+            helperFunction: () => { setSelectedInvoice({ ...getEditedInvoice({}), id: ''}); reset() }
+        }));
+    }, [ dispatch, getEditedInvoice, getSelectedInvoice, reset, setSelectedInvoice ]);
 
     return (
         <Dialog 

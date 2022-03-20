@@ -1,4 +1,4 @@
-import { addAllInvoices, addInvoice, changeTheme, deleteInvoice, markInvoiceAsPaid, toggleStateTheme } from '../actions';
+import { addAllInvoices, addInvoice, changeTheme, deleteInvoice, editInvoice, markInvoiceAsPaid, toggleStateTheme } from '../actions';
 import { initialState } from '../state';
 
 const addNewInvoice = (state, payload) => {
@@ -12,7 +12,20 @@ const changeThemeFunc = (state, payload) => {
 const deleteInvoiceFunc = (state, payload) => {
     const invoices = [ ...state.invoices.filter(item => item.id !== payload.id) ];
     return { ...state, invoices };
-}
+};
+
+const editInvoiceFunc = (state, payload) => {
+    const { id, invoice, helperFunction } = payload;
+    const invoices = [ ...state.invoices ];
+    const result = invoices.findIndex(item => item.id === id);
+
+    if(result !== -1) {
+        invoices[result] = invoice;;
+        helperFunction();
+    }
+
+    return { ...state, invoices };
+};
 
 const markInvoiceAsPaidFunc = (state, payload) => {
     const invoices = [ ...state.invoices ];
@@ -42,6 +55,9 @@ export const reducer = (state=initialState, action) => {
         }
         case deleteInvoice().type: {
             return deleteInvoiceFunc(state, action.payload);
+        }
+        case editInvoice().type: {
+            return editInvoiceFunc(state, action.payload);
         }
         case markInvoiceAsPaid().type: {
             return markInvoiceAsPaidFunc(state, action.payload);
