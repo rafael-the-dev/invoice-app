@@ -15,6 +15,11 @@ export const deleteInvoice = payload => ({
     type: 'DELETE_INVOICE'
 });
 
+export const markInvoiceAsPaid = payload => ({
+    payload,
+    type: 'MARK_INVOICE_AS_PAID'
+});
+
 export const changeTheme = payload => ({
     payload,
     type: 'CHANGE_THEME'

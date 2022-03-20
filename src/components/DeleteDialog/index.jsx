@@ -24,12 +24,6 @@ const DeleteDialog = () => {
 
         setOpenDeleteDialog(false);
         history.push('/');
-
-        /*setInvoiceList(oldList => {
-            const list = [ ...oldList ];
-            const result = list.filter(item => item.id !== getInvoiceToBeDeleted().id);
-            return result;
-        }, []);*/
     }, [ dispatch, getInvoiceToBeDeleted, history, setOpenDeleteDialog ]);
 
     return (

@@ -1,4 +1,4 @@
-import { addAllInvoices, changeTheme, deleteInvoice, toggleStateTheme } from '../actions';
+import { addAllInvoices, changeTheme, deleteInvoice, markInvoiceAsPaid, toggleStateTheme } from '../actions';
 import { initialState } from '../state';
 
 const changeThemeFunc = (state, payload) => {
@@ -7,6 +7,17 @@ const changeThemeFunc = (state, payload) => {
 
 const deleteInvoiceFunc = (state, payload) => {
     const invoices = [ ...state.invoices.filter(item => item.id !== payload.id) ];
+    return { ...state, invoices };
+}
+
+const markInvoiceAsPaidFunc = (state, payload) => {
+    const invoices = [ ...state.invoices ];
+    const result = invoices.find(item => item.id === payload.id);
+
+    if(result) {
+        result['status'] = 'paid';
+    }
+
     return { ...state, invoices };
 }
 
@@ -24,6 +35,9 @@ export const reducer = (state=initialState, action) => {
         }
         case deleteInvoice().type: {
             return deleteInvoiceFunc(state, action.payload);
+        }
+        case markInvoiceAsPaid().type: {
+            return markInvoiceAsPaidFunc(state, action.payload);
         }
         case toggleStateTheme().type: {
             return toggleThemeFunc(state);

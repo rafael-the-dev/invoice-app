@@ -13,6 +13,8 @@ import CreateInvoice from '../CreateInvoice';
 import { useRef } from 'react';
 import { useSelector } from 'react-redux'
 import { getAllInvoices } from '../../redux/selectors';
+import { useDispatch } from 'react-redux'
+import { markInvoiceAsPaid } from '../../redux/actions'
 
 const Invoice = () => {
     const display = useDisplay();
@@ -20,40 +22,27 @@ const Invoice = () => {
     const bg = useBackground();
     const responsive = useResponsive();
     const text = useTypography();
+    
+    const dispatch = useDispatch();
 
     const invoicesList = useSelector(getAllInvoices);
 
-    const { displayCreateInvoice, openCreateInvoice, setInvoiceList, setOpenDeleteDialog, setInvoiceToBeDeleted } = useContext(AppContext);
+    const { displayCreateInvoice, openCreateInvoice, setOpenDeleteDialog, setInvoiceToBeDeleted } = useContext(AppContext);
     const [ invoice, setInvoice ] = useState({});
     const history = useHistory();
     const { id } = useParams();
-
-    //const editeClickHandler = useCallback(() => , [ displayCreateInvoice, invoice ]);
 
     const statusRef = useRef({
         draft: classes.draftStatus,
         paid: classes.paidStatus,
         pending: classes.peddingStatus,
-    })
-
-    /*const deleteClickHandler = useCallback(() => {
-        setInvoiceList(oldList => {
-            const list = [ ...oldList ];
-            const result = list.filter(item => item.id !== invoice.id);
-            return result;
-        }, []);
-    }, [ invoice, setInvoiceList ]);*/
+    });
 
     const markAsPaidClickHandler = useCallback(() => {
-        setInvoiceList(oldList => {
-            const list = [ ...oldList ];
-            const result = list.find(item => item.id === id);
-            if(result) {
-                result['status'] = 'paid';
-            }
-            return list;
-        }, []);
-    }, [ id, setInvoiceList ])
+        dispatch(markInvoiceAsPaid({
+            id
+        }));
+    }, [ dispatch, id ])
 
     const buttonsMemo = useMemo(() => (
         <>
