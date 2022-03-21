@@ -1,4 +1,4 @@
-import { addAllInvoices, addInvoice, changeTheme, deleteInvoice, editInvoice, markInvoiceAsPaid, toggleStateTheme } from '../actions';
+import { addAllInvoices, addInvoice, changeTheme, deleteInvoice, editInvoice, markInvoiceAsPaid, saveInvoiceAsDraft, toggleStateTheme } from '../actions';
 import { initialState } from '../state';
 
 const addNewInvoice = (state, payload) => {
@@ -36,7 +36,11 @@ const markInvoiceAsPaidFunc = (state, payload) => {
     }
 
     return { ...state, invoices };
-}
+};
+
+const saveInvoiceAsDraftFunc = (state, payload) => {
+    return { ...state, invoices: [ ...state.invoices, payload.invoice ]};
+};
 
 const toggleThemeFunc = (state) => {
     return { ...state, theme: { isLightTheme: !state.theme.isLightTheme } };
@@ -61,6 +65,9 @@ export const reducer = (state=initialState, action) => {
         }
         case markInvoiceAsPaid().type: {
             return markInvoiceAsPaidFunc(state, action.payload);
+        }
+        case saveInvoiceAsDraft().type: {
+            return saveInvoiceAsDraftFunc(state, action.payload);
         }
         case toggleStateTheme().type: {
             return toggleThemeFunc(state);

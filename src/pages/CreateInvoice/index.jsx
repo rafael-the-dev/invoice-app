@@ -13,7 +13,7 @@ import nextId from "react-id-generator";
 import { useForm } from "react-hook-form";
 import moment from 'moment';
 import { useDispatch } from 'react-redux'
-import { addInvoice, editInvoice } from '../../redux/actions';
+import { addInvoice, editInvoice, saveInvoiceAsDraft } from '../../redux/actions';
 
 const CreateInvoice = () => {
     const display = useDisplay();
@@ -24,7 +24,7 @@ const CreateInvoice = () => {
     const dispatch = useDispatch();
 
     const { closeCreateInvoice, getSelectedInvoice, isCreateNewInvoiceDialog, 
-        openCreateInvoice, setInvoiceList, setSelectedInvoice } = useContext(AppContext);
+        openCreateInvoice, setSelectedInvoice } = useContext(AppContext);
     const [paymentTerm, setPaymentTerm] = useState('Net 30 Day');
     const [ itemsList, setItemList ] = useState([ ]);
     const [ productsList, setProductsList ] = useState({});
@@ -257,11 +257,12 @@ const CreateInvoice = () => {
     }, [ getSelectedInvoice, getValues, getTotalPrice, productsList ]);
 
     const saveAsDraftClickHandler = useCallback(() => {
-        const newItem = getEditedInvoice({ id: invoiceID.current, status: 'draft'})
-        setInvoiceList(list => [...list, newItem]);
+        const newItem = getEditedInvoice({ id: invoiceID.current, status: 'draft'});
+        dispatch(saveInvoiceAsDraft({ invoice: newItem }));
+        //setInvoiceList(list => [...list, newItem]);
         reset();
         generateInvoiceID();
-    }, [ generateInvoiceID, getEditedInvoice, reset, setInvoiceList ]);
+    }, [ dispatch, generateInvoiceID, getEditedInvoice, reset ]);
 
     const editClickHandler = useCallback(() => {
         dispatch(editInvoice({

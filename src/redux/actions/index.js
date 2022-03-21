@@ -23,6 +23,11 @@ export const markInvoiceAsPaid = payload => ({
     type: 'MARK_INVOICE_AS_PAID'
 });
 
+export const saveInvoiceAsDraft = payload => ({
+    payload,
+    type: 'SAVE_INVOICE_AS_DRAFT'
+});
+
 export const changeTheme = payload => ({
     payload,
     type: 'CHANGE_THEME'
