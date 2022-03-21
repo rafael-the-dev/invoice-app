@@ -118,6 +118,7 @@ const CreateInvoice = () => {
     const generateInvoiceID = useCallback(() => {
         invoiceID.current = `${getRandomLetter()}${getRandomLetter()}${getRandomNumber()}${getRandomNumber()}${getRandomNumber()}${getRandomNumber()}`;
     }, [ getRandomLetter, getRandomNumber ]);
+
     useEffect(() => {
         generateInvoiceID();
     }, [ generateInvoiceID ]);
@@ -160,7 +161,8 @@ const CreateInvoice = () => {
             reset();
             generateInvoiceID()
         }
-    }
+    };
+
     const saveHandler = event => {
         event.preventDefault();
 
@@ -211,7 +213,6 @@ const CreateInvoice = () => {
             generateNewProduct.current = true;
             setProductsList(list);
         }
-            
     }, [ getSelectedInvoice, isCreateNewInvoiceDialog, setValue ]);
 
     useEffect(() => {
@@ -259,7 +260,6 @@ const CreateInvoice = () => {
     const saveAsDraftClickHandler = useCallback(() => {
         const newItem = getEditedInvoice({ id: invoiceID.current, status: 'draft'});
         dispatch(saveInvoiceAsDraft({ invoice: newItem }));
-        //setInvoiceList(list => [...list, newItem]);
         reset();
         generateInvoiceID();
     }, [ dispatch, generateInvoiceID, getEditedInvoice, reset ]);
